@@ -1,4 +1,4 @@
-import { player , playerSpriteSheet } from "./character.js";
+import { player , playerSpriteSheet ,playerSprite } from "./character.js";
 import { canvas , ctx ,roadSpriteSheet } from "./main.js";
 
 export const sceneSprites = {
@@ -68,13 +68,13 @@ export function drawRoad(){
         roadSprite.x , roadSprite.y , roadSprite.w , roadSprite.h , 
         -drawW / 2 , -drawH / 2 - 1 , drawW , drawH + 2
     );
-    ctx.strokeRect(-drawW /2 , -drawH / 2 - 1 , drawW , drawH + 2);
+    ctx.strokeRect(-drawW /2 + playerSprite.w * 2, -drawH / 2 - 1 , drawW , drawH + 2);
     //right road top for illusion
     ctx.drawImage(
         roadSpriteSheet ,
         roadSprite.x , roadSprite.y , roadSprite.w , roadSprite.h ,
         -drawW / 2 , -drawH / 2 - drawH , drawW - 1 , drawH + 2
     );
-    ctx.strokeRect(-drawW / 2 , -drawH / 2 - drawH - 1 , drawH , drawH + 2);
+    ctx.strokeRect(-drawW / 2 + playerSprite.w * 2 , -drawH / 2 - drawH - 1 , drawH , drawH + 2);
     ctx.restore();
 }
