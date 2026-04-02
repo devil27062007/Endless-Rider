@@ -31,9 +31,9 @@ export function updateScene(delta){
 }
 
 export function updateRoad(delta){
-    startY += player.speed * delta * 1000;
+    startY += player.speed * delta * 750;
     startY = Math.floor(startY % (roadSprite.h * 0.9));
-    if(startY >= roadSprite * 0.9) startY = 0;
+    if ( startY >= roadSprite * 0.9 ) startY = 0;
 }
 
 export function drawRoad(){
@@ -61,16 +61,20 @@ export function drawRoad(){
     ctx.save();
     ctx.translate(startX + drawH + drawW / 2 , startY + drawH / 2);
     ctx.scale(-1 , 1);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "red";
     ctx.drawImage(
         roadSpriteSheet ,
         roadSprite.x , roadSprite.y , roadSprite.w , roadSprite.h , 
-        -drawW / 2 , -drawH / 2 , drawW , drawH
+        -drawW / 2 , -drawH / 2 - 1 , drawW , drawH + 2
     );
+    ctx.strokeRect(-drawW /2 , -drawH / 2 - 1 , drawW , drawH + 2);
     //right road top for illusion
     ctx.drawImage(
         roadSpriteSheet ,
         roadSprite.x , roadSprite.y , roadSprite.w , roadSprite.h ,
-        -drawW / 2 , -drawH / 2 - drawH , drawW , drawH
+        -drawW / 2 , -drawH / 2 - drawH , drawW - 1 , drawH + 2
     );
+    ctx.strokeRect(-drawW / 2 , -drawH / 2 - drawH - 1 , drawH , drawH + 2);
     ctx.restore();
 }
