@@ -1,4 +1,7 @@
-import { drawPlayer,gameLoop, keys, player, playerSprite, playerSpriteSheet } from "./character.js";
+import { drawPlayer, gameLoop, initPlayer, keys, player, playerSprite, playerSpriteSheet } from "./character.js";
+
+export const roadSpriteSheet = new Image();
+roadSpriteSheet.src = "assets/road.svg";
 
 export const canvas = document.getElementById("game-canvas");
 export const ctx = canvas.getContext("2d");
@@ -8,11 +11,12 @@ function resizeCanvas() {
 
     canvas.style.width = window.innerWidth + 'px';
     canvas.style.height = window.innerHeight + 'px';
-    
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr ;
 
-    ctx.scale(dpr,dpr);
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+
+    ctx.scale(dpr, dpr);
+    initPlayer();
 }
 
 playerSpriteSheet.onload = drawPlayer;
@@ -21,52 +25,45 @@ window.addEventListener("resize", () => {
     resizeCanvas();
 })
 resizeCanvas();
+initPlayer();
 
-function imageLoaded(){
-    let imageCount = 1 ;
-    let loadedCount = 0;
+let loadedCount = 0;
+const imageCount = 2;
 
-    if(playerSpriteSheet.onload){
-        loadedCount += 1 ;
-    }
-
-    return imageCount === loadedCount ;
-}
-
-function startGame(){
-    const check = imageLoaded();
-    if(check){
+function onImageLoad() {
+    loadedCount++;
+    if (imageCount === loadedCount) {
         requestAnimationFrame(gameLoop);
-    } else {
-        console.log("game assets no yet loaded");
     }
 }
 
-document.addEventListener('keydown',(e) =>{
+document.addEventListener('keydown', (e) => {
     console.log(e.key);
-    switch(e.key.toLowerCase()){
+    switch (e.key.toLowerCase()) {
         case 'w':
-        case 'arrowup':keys.up = true ; return;
+        case 'arrowup': keys.up = true; return;
         case 'a':
-        case 'arrowleft': keys.left = true ; return ;
+        case 'arrowleft': keys.left = true; return;
         case 's':
-        case 'arrowdown':keys.down = true ; return ;
+        case 'arrowdown': keys.down = true; return;
         case 'd':
-        case'arrowright':keys.down = true ; return
+        case 'arrowright': keys.right = true; return
     }
 });
 
-document.addEventListener('keyup',(e)=>{
-    switch(e.key.toLowerCase()){
+document.addEventListener('keyup', (e) => {
+    switch (e.key.toLowerCase()) {
         case 'w':
-        case 'arrowup': keys.up = false ; return ;
+        case 'arrowup': keys.up = false; return;
         case 'a':
-        case 'arrowup': keys.left = false ; return ;
+        case 'arrowleft': keys.left = false; return;
         case 's':
-        case 'arrowdown': keys.down = false ; return ;
+        case 'arrowdown': keys.down = false; return;
         case 'd':
         case 'arrowright': keys.right = false; return;
     }
 });
 
-startGame();
+playerSpriteSheet.onload = onImageLoad;
+
+roadSpriteSheet.onload = onImageLoad;

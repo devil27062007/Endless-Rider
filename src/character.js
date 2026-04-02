@@ -1,12 +1,12 @@
 import { ctx, canvas } from "./main.js";
-import { drawScene, updateScene } from "./scene.js";
+import { drawRoad, drawScene, updateScene, roadSprite, updateRoad } from "./scene.js";
 
 export const playerSpriteSheet = new Image();
 playerSpriteSheet.src = "../assets/bk_cars1.png";
 
 export const player = {
-    x: 400,
-    y: 500,
+    x: 0,
+    y: 0,
     speed: 0.5,
     isDead: false,
     nitro: 0,
@@ -16,8 +16,13 @@ export const player = {
 export const keys = {
     up: false,
     down: false,
+    left: false,
     right: false,
-    down: false
+}
+
+export function initPlayer() {
+    player.x = canvas.width / window.devicePixelRatio / 2 - roadSprite.w * 0.7 + playerSprite.w * 2 + 30;
+    player.y = canvas.height / window.devicePixelRatio - playerSprite.h;
 }
 
 export const playerSprite = { x: 297, y: 347, w: 39, h: 83 };
@@ -32,8 +37,8 @@ export function updatePlayer(delta) {
     //for now testing purpose i am moving the car/ player
     //no brake/deaccelaration in thi game
     //learned maths haha
-    const turnRate = 20*delta ;
-    const returnRate = 25 * delta ;
+    const turnRate = 20 * delta;
+    const returnRate = 25 * delta;
     const maxAngle = 25;
 
     if (keys.up) {
@@ -44,24 +49,24 @@ export function updatePlayer(delta) {
         if (player.speed < 0.5) player.speed = 0.5;
     }
 
-    if (keys.left){
-        angle -= turnRate ;
-        if(angle < -maxAngle) angle = - maxAngle;
+    if (keys.left) {
+        angle -= turnRate;
+        if (angle < -maxAngle) angle = - maxAngle;
     }
-    else if(keys.right){
+    else if (keys.right) {
         angle += turnRate;
-        if(angle > maxAngle) angle = maxAngle;
-    } else{
-        if(angle > 0){
+        if (angle > maxAngle) angle = maxAngle;
+    } else {
+        if (angle > 0) {
             angle -= returnRate;
-            if(angle < 0) angle = 0;
-        } else if(angle < 0){
+            if (angle < 0) angle = 0;
+        } else if (angle < 0) {
             angle += returnRate;
-            if(angle > 0) angle = 0;
+            if (angle > 0) angle = 0;
         }
     }
 
-    let rad = angle * Math.PI/180;
+    let rad = angle * Math.PI / 180;
 
     let moveX = Math.sin(rad);
     let moveY = -Math.cos(rad);
@@ -72,32 +77,34 @@ export function updatePlayer(delta) {
     player.x = pseudoX;
     player.y = pseudoY;
 
-    if(player.y < 0) player.y = 0;
-    if(player.y > canvas.height - playerSprite.w) player.y = canvas.height - playerSprite.w;
+    if (player.y < 0) player.y = 0;
+    if (player.y > canvas.height - playerSprite.w) player.y = canvas.height - playerSprite.w;
 
 };
 
 export function drawPlayer() {
     ctx.imageSmoothingEnabled = false;
     ctx.save();
-    ctx.translate(player.x + playerSprite.w/2 , player.y + playerSprite.h /2);
+    ctx.translate(player.x + playerSprite.w / 2, player.y + playerSprite.h / 2);
     ctx.rotate(angle * Math.PI / 180);
     ctx.drawImage(
         playerSpriteSheet,
         playerSprite.x, playerSprite.y, playerSprite.w, playerSprite.h,
-        -playerSprite.w/2 , -playerSprite.h / 2 , playerSprite.w  , playerSprite.h
+        -playerSprite.w / 2, -playerSprite.h / 2, playerSprite.w * 2, playerSprite.h * 2
     );
     ctx.restore();
 }
 
 export function gameLoop(currentTime) {
-    ctx.clearRect(0, 0, canvas.width , canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     let delta = (currentTime - lastTime) / 1000;
     if (delta > 0.1) delta = 0.1;
 
     lastTime = currentTime;
     updateScene();
     updatePlayer(delta);
+    updateRoad(delta);
+    drawRoad();
     drawScene();
     drawPlayer();
 
