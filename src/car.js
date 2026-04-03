@@ -1,13 +1,13 @@
-import { player } from "./character.js";
-import { canvas, ctx, npcSpriteSheet, randomInt} from "./main.js";
+import { player } from "./character.js" ;
+import { canvas, ctx, npcSpriteSheet, randomInt } from "./main.js" ;
 import { npc1Sprite, npc2Sprite, npc3Sprite , npc4Sprite, summer} from "./spriteCoordinates.js";
 
-let cars = [];
-let spawnDelay = 2;
-let currentSpawn = 0;
-let lanes = [0, 0];
+let cars = [] ;
+let spawnDelay = 2 ;
+let currentSpawn = 0 ;
+let lanes = [0, 0] ;
 
-const facing = ["up","down"];
+const facing = ["up","down"] ;
 const spriteMap = {
     "1": npc1Sprite,
     "2": npc2Sprite,
@@ -19,13 +19,13 @@ export function initLanes(){
     const lane1 = canvas.width / window.devicePixelRatio / 2 - (summer["road"].sw / 2);
     const lane2 = lane1 + (summer["road"].sw / 2);
 
-    lanes[0] = lane1;
-    lanes[1] = lane2;
+    lanes[0] = lane1 ;
+    lanes[1] = lane2 ;
 }
 
-export function spawnCars(delta){
+export function spawnCars(delta) {
     currentSpawn += delta;
-    if(currentSpawn > spawnDelay){
+    if(currentSpawn > spawnDelay) {
         currentSpawn = 0;
         let laneIndex = randomInt(0,lanes.length - 1);
         let lane = lanes[laneIndex];

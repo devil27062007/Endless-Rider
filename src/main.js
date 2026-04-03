@@ -8,22 +8,22 @@ export const ctx = canvas.getContext("2d");
 export let isGameRunning = true;
 
 export const playerSpriteSheet1 = new Image();
-playerSpriteSheet1.src = "assets/pixelPack/Cars/Player_blue.png";
+playerSpriteSheet1.src = "assets/Cars/Player_blue.png";
 
 export const playerSpriteSheet2 = new Image();
-playerSpriteSheet2.src = "assets/pixelPack/Cars/Player_red.png";
+playerSpriteSheet2.src = "assets/Cars/Player_red.png";
 
 export const playerSpriteSheet3 = new Image();
-playerSpriteSheet3.src = "assets/pixelPack/Cars/Player_yellow.png";
+playerSpriteSheet3.src = "assets/Cars/Player_yellow.png";
 
 export const summerRoadSpriteSheet = new Image();
-summerRoadSpriteSheet.src = "assets/pixelPack/Levels/Summer_road.png";
+summerRoadSpriteSheet.src = "assets/Levels/Summer_road.png";
 
 export const summerGasStationSpriteSheet = new Image();
-summerGasStationSpriteSheet.src = "assets/pixelPack/Levels/Summer_gas_station.png";
+summerGasStationSpriteSheet.src = "assets/Levels/Summer_gas_station.png";
 
 export const summerDetailsSpriteSheet = new Image();
-summerDetailsSpriteSheet.src = "assets/pixelPack/Levels/Summer_details.png";
+summerDetailsSpriteSheet.src = "assets/Levels/Summer_details.png";
 
 export const summerDetails1SpriteSheet = new Image();
 summerDetails1SpriteSheet.src = "assets/Levels/Summer_details1.png";
@@ -38,7 +38,7 @@ export const summerDetails4SpriteSheet = new Image();
 summerDetails4SpriteSheet.src = "assets/Levels/Summer_details4.png";
 
 export const npcSpriteSheet = new Image();
-npcSpriteSheet.src = "asset/Levels/Summer_details5.png";
+npcSpriteSheet.src = "assets/Cars/NPC_cars.png";
 
 export const keys = {
     up: false,
