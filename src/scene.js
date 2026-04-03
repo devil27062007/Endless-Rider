@@ -74,3 +74,48 @@ export function updateRoad(delta){
 
     refillRoads();
 }
+
+export function refillRoads(){
+    const screenH = canvas.height / window.devicePixelRatio ;
+    let totalH = 0;
+    for(let i = 0; i < roads.length ; i++){
+        totalH += summer[roads[i]].stackHeight ;
+    }
+    while(totalH < screenH * 3){
+        roadSinceLastBunk++;
+        if(roadSinceLastBunk > roadUntillNextBunk){
+            roadSinceLastBunk = 0;
+            roadUntillNextBunk += bunkSpacingIncrease;
+            bunkSpacingIncrease += 5;
+            roads.push("gasStation");
+            totalH += summer["gasStation"].stackHeight;
+            while(totalH < screenH * 2){
+                roads.push("road");
+                totalH += summer["road"].stackHeight;
+            }
+        } else {
+            roads.push("road");
+            totalH += summer["road"].stackHeight;
+        }
+    }
+}
+
+export function drawScene(){
+    const positions = [];
+    let currentY = posY ;
+    for( let i = 0; i< roads.length; i++){
+        positions.push(currentY);
+        currentY -= summer[roads[i]].stackHeight;
+    }
+    for(let i = roads.length - 1;i>=0;i--){
+        const road = summer[roads[i]];
+        const sheet = sceneSpriteSheetArray[currentScene][roads[i]];
+        const drawY = positions[i] -(road.sh - road.stackHeight);
+
+        ctx.drawImage(
+            sheet,
+            road.x, road.y, road.w, road.h,
+            posX, drawY, road.sw, road.sh
+        )
+    }
+};

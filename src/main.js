@@ -1,6 +1,6 @@
 import { initLanes } from "./car.js";
-import { gameLoop , initPlayer } from "./character.js";
-import { initRoadPos , initSheet} from "./scene.js";
+import { gameLoop, initPlayer, player } from "./character.js";
+import { initRoadPos, initSheet } from "./scene.js";
 
 export const canvas = document.getElementById("game-canvas");
 export const ctx = canvas.getContext("2d");
@@ -8,25 +8,25 @@ export const ctx = canvas.getContext("2d");
 export let isGameRunning = true;
 
 export const playerSpriteSheet1 = new Image();
-playerSpriteSheet1.src = "assets/Cars/Player_blue.png";
+playerSpriteSheet1.src = "assets/pixelPack/Cars/Player_blue.png";
 
 export const playerSpriteSheet2 = new Image();
-playerSpriteSheet2.src = "asset/Cars/Player_red.png";
+playerSpriteSheet2.src = "assets/pixelPack/Cars/Player_red.png";
 
 export const playerSpriteSheet3 = new Image();
-playerSpriteSheet3.src = "assets/Cars/Player_yellow.png";
+playerSpriteSheet3.src = "assets/pixelPack/Cars/Player_yellow.png";
 
 export const summerRoadSpriteSheet = new Image();
-summerRoadSpriteSheet.src = "assets/Levels/Summer_road.png";
+summerRoadSpriteSheet.src = "assets/pixelPack/Levels/Summer_road.png";
 
 export const summerGasStationSpriteSheet = new Image();
-summerGasStationSpriteSheet.src = "assets/Levels/Summer_gas_station.png";
+summerGasStationSpriteSheet.src = "assets/pixelPack/Levels/Summer_gas_station.png";
 
 export const summerDetailsSpriteSheet = new Image();
-summerDetailsSpriteSheet.src = "assets/Levels/Summer_details.png";
+summerDetailsSpriteSheet.src = "assets/pixelPack/Levels/Summer_details.png";
 
 export const npcSpriteSheet = new Image();
-npcSpriteSheet.src = "assets/Cars/NPC_cars.png";
+npcSpriteSheet.src = "assets/pixelPack/Cars/NPC_cars.png";
 
 export const keys = {
     up: false,
@@ -48,7 +48,7 @@ function resizeCanvas() {
     ctx.scale(dpr, dpr);
 };
 
-export function randomInt(min,max){
+export function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
@@ -67,35 +67,48 @@ function onImageLoad() {
     }
 };
 
-document.addEventListener("keydown", (e) =>{
-    switch(e.key.toLowerCase()){
+document.addEventListener("keydown", (e) => {
+    switch (e.key.toLowerCase()) {
         case 'w':
         case 'arrowup': keys.up = true; return;
         case 's':
         case ' ':
-        case 'arrowdown': keys.down = true ; return;
+        case 'arrowdown': keys.down = true; return;
         case 'a':
-        case 'arrowleft': keys.left = true ; return ;
+        case 'arrowleft': keys.left = true; return;
         case 'd':
-        case 'arrowright': keys.right = true ; return ;
+        case 'arrowright': keys.right = true; return;
         case 'shift': keys.shift = true; return;
     }
 });
 
-document.addEventListener("keyup",(e)=>{
-    switch(e.key.toLowerCase()){
+document.addEventListener("keyup", (e) => {
+    switch (e.key.toLowerCase()) {
         case 'w':
-        case 'arrowup': keys.up = false ; return;
+        case 'arrowup': keys.up = false; return;
         case 's':
         case ' ':
         case 'arrowdown': keys.down = false; return;
         case 'a':
         case 'arrowleft': keys.left = false; return;
         case 'd':
-        case 'arrowright': keys.right = false ; return;
+        case 'arrowright': keys.right = false; return;
         case 'shift': keys.shift = false; return;
     }
 });
 
 
+resizeCanvas();
+initPlayer();
+initSheet();
+initRoadPos();
+initLanes();
+
+playerSpriteSheet1.onload = onImageLoad;
+playerSpriteSheet2.onload = onImageLoad;
+playerSpriteSheet3.onload = onImageLoad;
+summerDetailsSpriteSheet.onload = onImageLoad;
+summerRoadSpriteSheet.onload = onImageLoad;
+summerGasStationSpriteSheet.onload = onImageLoad;
+npcSpriteSheet.onload = onImageLoad;
 
