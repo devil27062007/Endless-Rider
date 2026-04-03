@@ -25,8 +25,20 @@ summerGasStationSpriteSheet.src = "assets/pixelPack/Levels/Summer_gas_station.pn
 export const summerDetailsSpriteSheet = new Image();
 summerDetailsSpriteSheet.src = "assets/pixelPack/Levels/Summer_details.png";
 
+export const summerDetails1SpriteSheet = new Image();
+summerDetails1SpriteSheet.src = "assets/Levels/Summer_details1.png";
+
+export const summerDetails2SpriteSheet = new Image();
+summerDetails2SpriteSheet.src = "assets/Levels/Summer_details2.png";
+
+export const summerDetails3SpriteSheet = new Image();
+summerDetails3SpriteSheet.src = "assets/Levels/Summer_details3.png";
+
+export const summerDetails4SpriteSheet = new Image();
+summerDetails4SpriteSheet.src = "assets/Levels/Summer_details4.png";
+
 export const npcSpriteSheet = new Image();
-npcSpriteSheet.src = "assets/pixelPack/Cars/NPC_cars.png";
+npcSpriteSheet.src = "asset/Levels/Summer_details5.png";
 
 export const keys = {
     up: false,
@@ -57,7 +69,7 @@ window.addEventListener("resize", () => {
 });
 
 let loadedCount = 0;
-const imageCount = 7;
+const imageCount = 11;
 
 function onImageLoad() {
     loadedCount++;
@@ -108,6 +120,10 @@ playerSpriteSheet1.onload = onImageLoad;
 playerSpriteSheet2.onload = onImageLoad;
 playerSpriteSheet3.onload = onImageLoad;
 summerDetailsSpriteSheet.onload = onImageLoad;
+summerDetails1SpriteSheet.onload = onImageLoad;
+summerDetails2SpriteSheet.onload = onImageLoad;
+summerDetails3SpriteSheet.onload = onImageLoad;
+summerDetails4SpriteSheet.onload = onImageLoad;
 summerRoadSpriteSheet.onload = onImageLoad;
 summerGasStationSpriteSheet.onload = onImageLoad;
 npcSpriteSheet.onload = onImageLoad;
