@@ -1,10 +1,10 @@
-import { drawCars, spawnCars, updateCars} from "./car.js";
-import { canvas, ctx, keys, playerSpriteSheet1 } from "./main.js";
-import { drawScene, updateRoad , updateDetails } from "./scene.js";
-import { player1Sprite, summer } from "./spriteCoordinates.js";
+import { drawCars , spawnCars , updateCars } from "./car.js" ;
+import { canvas, ctx, keys, playerSpriteSheet1 } from "./main.js" ;
+import { drawScene, updateRoad , updateDetails } from "./scene.js" ;
+import { player1Sprite, summer } from "./spriteCoordinates.js" ;
 
-export let defaultPlayerSheet;
-export let playerSprite;
+export let defaultPlayerSheet ;
+export let playerSprite ;
 
 export const player = {
     x: 0,
@@ -35,7 +35,7 @@ let lastTime = 0;
 export let angle = 0;
 let animationId = null ;
 
-export function updatePlayer(delta) {
+export function updatePlayer(delta){
     
     let moveX = 0;
     let moveY = 0;
