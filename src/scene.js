@@ -50,21 +50,170 @@ export function initGroundArea(){
     drawableAreaOnLeftSide = canvas.width / window.devicePixelRatio / 2 - roadSprite.w * 0.7 - 77;
     drawableAreaOnRightSide = canvas.width / window.devicePixelRatio / 2 + roadSprite.w * 0.7 + 77;
 
-    
+    lampPosXLeft = drawableAreaOnLeftSide + 77 - 25;
+    lampPosXRight = drawableAreaOnRightSide - 77 + 10;
+
+    streetLights.push({
+        x: lampPosXLeft ,
+        y: -500, //the lamp faces rightside so facing is right but position left sided
+        facing: "right"
+    });
+
+    streetLights.push({
+        x: lampPosXRight ,
+        y: -500,// the faces left side so facing right side
+        facing: "left"
+    });
+
+
 }
 
 export function drawScene(){
     ctx.imageSmoothingEnabled = false ;
-    ctx.drawImage(
-        playerSpriteSheet ,
-        sceneSprites.barricade.x , sceneSprites.barricade.y ,sceneSprites.barricade.w , sceneSprites.barricade.h ,
-        10 , 20 , sceneSprites.barricade.sw , sceneSprites.barricade.sh
-    );
+    
+    let minX = 0, minY = 0;
+    let maxX = drawableAreaOnLeftSide , maxY = canvas.height / devicePixelRatio;
+
+    //pavement left
+    drawPavement(drawableAreaOnLeftSide , drawableAreaOnLeftSide + 77, minY , maxY , pavement.w , pavement.h);
+
+    //ground drawing for left side af the road
+    drawGround(minX, maxX, minY , maxY, ground.w , ground.h);
+
+    minX = drawableAreaOnRightSide;
+    minY = 0;
+    maxX = canvas.width / window.devicePixelRatio ;
+    maxY = canvas.height / window.devicePixelRatio ;
+
+    //pavement right
+    drawPavement(drawableAreaOnRightSide - 77, drawableAreaOnRightSide, minY, maxY, pavement.w, pavement.h);
+
+    //ground drawing for rightside of the road
+    drawGround(minX, maxX, minY, maxY, ground.w, ground.h);
+
+    for( let i = 0; i< scenes.length ; i++){
+        const sceneSprite = sceneSprites[scenes[i].scene];
+        const pos = scenes[i];
+        ctx.imageSmoothingEnabled = false;
+
+        if(scenes[i] === "grass1"){
+
+        } else {
+            ctx.drawImage(
+                playerSpriteSheet, 
+                sceneSprite.x, sceneSprite.y, sceneSprite.w, sceneSprite.h,
+                Math.floor(pos.x), Math.floor(pos.y), sceneSprite.sw, sceneSprite.sh
+            );
+        }
+    };
+
+    //street light will be ddraw using this function
+    drawStreetLightOnPavement();
+
 };
 
-export function updateScene(delta){
-    
+export function drawPavement(minX, maxX, minY, maxY, w, h){
+    for(let i = minY; i < maxY; i+=h){
+        for(let j = minX; j < maxX; j+=w){
+            ctx.drawImage(
+                playerSpriteSheet,
+                pavement.x , pavement.y, pavement.w, pavement.h,
+                j,i,w,h
+            );
+        }
+    }
 };
+
+export function drawGround(minX, maxX, minY, maxY, w, h){
+    for(let i= minY; i< maxY ; i+=h){
+        for(let j= minX; j< maxX; j+=w){
+            ctx.drawImage(
+                playerSpriteSheet,
+                ground.x, ground.y, ground.w, ground.h,
+                j, i, w, h
+            );
+        }
+    }
+};
+
+export function drawStreetLightOnPavement(){
+    for(let i = 0; i<streetLights.length ; i++){
+        let streetLight = streetLights[i];
+        if(streetLight.facing === "right"){
+            ctx.drawImage(
+                streetLightSpriteSheet,
+                streetLightSprite.x , streetLightSprite.y , streetLightSprite.w, streetLightSprite.h,
+                streetLight.x, streetLight.y, streetLightSprite.sw, streetLightSprite.sh
+            );
+        }else {
+            ctx.save();
+
+            ctx.translate(streetLight.x + streetLightSprite.sw / 2, streetLight.y + streetLightSprite.sh / 2);
+
+            ctx.scale(-1, 1);
+            ctx.drawImage(
+                streetLightSpriteSheet ,
+                streetLightSprite.x, streetLightSprite.y , streetLightSprite.w, streetLightSprite.h ,
+                -streetLightSprite.sw/2, -streetLightSprite.sh/2 , streetLightSprite.sw, streetLightSprite.sh
+            );
+            ctx.restore();
+        }
+    }
+}
+
+export function updateScene(delta){
+    for(let i=0;i< scenes.length; i++){
+        scenes[i].y += player.speed * delta * 750;
+    };
+
+    scenes = scenes.filter(scene => scene.y < 3000);
+
+    for(let i = 0; i< streetLights.length ; i++){
+        streetLights[i].y += player.speed * delta * 750;
+    };
+
+    streetLights = streetLights.filter(sl => sl.y < 3000);
+    console.log(streetLights);
+};
+
+export function spawnScene(delta){
+    sceneTime += delta ;
+    if(sceneTime > nextScene){
+        sceneTime = 0;
+        const keys = Object.keys(sceneSprites);
+        const randomScene = keys[randomInt(0, keys.length - 1)];
+        let x;
+        if(randomScene === "booth" || randomScene === "reLight" || randomScene === "orangeLight" ||
+            randomScene === "greenLight" || randomScene === "mailPost" || randomScene === "fireHydrant"
+        ){
+            x = canvas.width / window.devicePixelRatio / 2 - roadSprite.w * 0.7 - 77 / 2;
+        } else {
+            x = 20;
+        }
+        scenes.push({
+            scene: randomScene,
+            x: x,
+            y: -500,
+        });
+    }
+};
+
+export function spawnStreetlight(){
+    const streetLightLastSpawn = streetLights[streetLights.length - 1];
+
+    if(streetLightLastSpawn.y > 300){
+        streetLights.push({
+            x: lampPosXLeft,
+            y: -500,
+            facing : "right"
+        });
+        streetLights.push({
+            x: lampPosXRight  ,
+            y: -500,
+            facing: "left"
+        });
+    }
+}
 
 export function updateRoad(delta){
     startY += player.speed * delta * 750;
