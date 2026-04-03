@@ -60,5 +60,17 @@ export function updateRoad(delta){
     if(posY >= canvas.height / window.devicePixelRatio + road.sh){
         roads.shift();
         posY -= road.stackHeight;
+
+        //roadSinceLastBunk++;
+
+        //if(roadSinceLastBunk >= roadUntillNextBunk){
+        //    roadSinceLastBunk=0;
+        //    roadUntillNextBunk += bunkSpacingIncrease;
+        //    bunkSpacingIncrease+=2;
+        //    roads.push("gasStation");
+        //}else{
+        //    roads.push("road");}
     }
+
+    refillRoads();
 }

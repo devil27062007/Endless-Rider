@@ -67,4 +67,35 @@ function onImageLoad() {
     }
 };
 
+document.addEventListener("keydown", (e) =>{
+    switch(e.key.toLowerCase()){
+        case 'w':
+        case 'arrowup': keys.up = true; return;
+        case 's':
+        case ' ':
+        case 'arrowdown': keys.down = true ; return;
+        case 'a':
+        case 'arrowleft': keys.left = true ; return ;
+        case 'd':
+        case 'arrowright': keys.right = true ; return ;
+        case 'shift': keys.shift = true; return;
+    }
+});
+
+document.addEventListener("keyup",(e)=>{
+    switch(e.key.toLowerCase()){
+        case 'w':
+        case 'arrowup': keys.up = false ; return;
+        case 's':
+        case ' ':
+        case 'arrowdown': keys.down = false; return;
+        case 'a':
+        case 'arrowleft': keys.left = false; return;
+        case 'd':
+        case 'arrowright': keys.right = false ; return;
+        case 'shift': keys.shift = false; return;
+    }
+});
+
+
 
