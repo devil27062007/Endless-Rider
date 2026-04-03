@@ -1,11 +1,15 @@
 import { initCars } from "./car.js";
 import { drawPlayer, gameLoop, initPlayer, keys, player, playerSprite, playerSpriteSheet } from "./character.js";
+import { loadStartPage } from "./startPage.js";
+import { initWallet } from "./wallet.js";
 
 export const roadSpriteSheet = new Image();
 roadSpriteSheet.src = "assets/road.svg";
 
 export const canvas = document.getElementById("game-canvas");
 export const ctx = canvas.getContext("2d");
+
+export let isGameRunning = false;
 
 function resizeCanvas() {
     const dpr = window.devicePixelRatio || 1;
@@ -18,16 +22,19 @@ function resizeCanvas() {
 
     ctx.scale(dpr, dpr);
     initPlayer();
-}
+};
 
 playerSpriteSheet.onload = drawPlayer;
 
 window.addEventListener("resize", () => {
     resizeCanvas();
-})
+});
+
 resizeCanvas();
 initPlayer();
 initCars();
+initWallet(100);
+loadStartPage();
 
 let loadedCount = 0;
 const imageCount = 2;
@@ -35,9 +42,9 @@ const imageCount = 2;
 function onImageLoad() {
     loadedCount++;
     if (imageCount === loadedCount) {
-        requestAnimationFrame(gameLoop);
+        console.log("seccess");
     }
-}
+};
 
 document.addEventListener('keydown', (e) => {
     switch (e.key.toLowerCase()) {
@@ -66,5 +73,4 @@ document.addEventListener('keyup', (e) => {
 });
 
 playerSpriteSheet.onload = onImageLoad;
-
 roadSpriteSheet.onload = onImageLoad;

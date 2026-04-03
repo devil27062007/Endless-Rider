@@ -8,11 +8,11 @@ export function collisionCheck(){
     if(check) return true;
 
     return false;
-}
+};
 
 export function isCollidingWithObjects(){
     return false;
-}
+};
 
 export function isCollidingWithCars(){
     const shrinkY = 8, shrinkX = 2;
@@ -27,7 +27,7 @@ export function isCollidingWithCars(){
         )return true;
     }
     return false;
-}
+};
 
 export function getRotatedCorners(cx, cy, width, height, angleInDegrees){
 

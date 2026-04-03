@@ -41,18 +41,20 @@ export function initCars() {
         lane4,
     ];
 
-    console.log(carLanePosition);
-}
+};
 
 //need to add car path finding if it encounter obstacle;
-export function spawnCar(delta) {
+export function spawnCar(delta , laneAvoid=[]) {
     timePassed += delta;
     if (timePassed > nextSpawn) {
         lastSpawn = timePassed;
         timePassed = 0;
+        
+        let newLanes = carLanePosition.filter(item => !laneAvoid.includes(item));
+
         const carLane = carLanePosition[randomInt(0, carLanePosition.length - 1)];
+        
         let carSprite, facing;
-        console.log(carLane, carLanePosition);
         if (carLane === carLanePosition[3] || carLane === carLanePosition[2]) {
             const keys = Object.keys(carSpritesDown);
             carSprite = keys[randomInt(0, keys.length - 1)];
@@ -72,6 +74,7 @@ export function spawnCar(delta) {
         console.log(cars)
     }
 };
+
 
 export function updateCars(delta) {
     for (let i = 0; i < cars.length; i++) {
