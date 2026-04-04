@@ -4,7 +4,7 @@ import { drawCars, spawnCars, updateCars } from "./car.js";
 import { changeDefaultPlayer } from "./character.js";
 import { buttonSpriteSheet, buttonsSpriteSheet, canvas, ctx, desertRoadSpriteSheet,npcSpriteSheet, playerSpriteSheet1, playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4, summerRoadSpriteSheet,winterRoadSpriteSheet } from "./main.js";
 import { addScene, posX,posY, randomSceneGeneration, removeScene,scene, drawObstacles, drawScene, spawnObstacles, updateDetails, updateRoad } from "./scene.js";
-import { closeButtonSprite, desert, npc1Sprite,npc2Sprite, npc3Sprite, player1Sprite, player2SSprite, startPageUI, summer, winter} from "./spriteCoordinates.js";
+import { closeButtonSprite, desert, npc1Sprite,npc2Sprite, npc3Sprite, player1Sprite, player2Sprite, player2Sprite, player3Sprite, player4Sprite, scale, selectedButtonSprite, startPageUI, summer, winter} from "./spriteCoordinates.js";
 
 let animationId = null;
 let lastTime = 0;
@@ -118,5 +118,106 @@ export function isClickOnShopButton(x , y){
 
 export function clearIsActiveButton(){
     isActiveButton[0] = null;
+};
+
+export function drawPageForActiveButtons(){
+    if(isActiveButton.length===0 || isActiveButton[0] === "" || isActiveButton[0] === null) return;
+
+    let bgWidth = Math.round(scale * 130);
+    let bgHeight = Math.round(scale * 130);
+
+    let x = posX + summer["road"].sw + scale * 3;
+    let y = canvas.height / window.devicePixelRatio / 2 -bgHeight / 2;
+
+    drawBackGround(x, y, bgWidth, bgHeight);
+    drawCloseButton(x + bgWidth - scale * 2, y + scale * 2);
+    drawStationObstacles(x + bgWidth / 2, y+ scale * 2);
+    showPlayerColorOption(x, y, bgWidth, bgHeight);
+    drawSceneOnStartPage(x,y);
+};
+
+export function drawBackGround(x,y,w=scale * 20, h = scale * 20, radius = 10){
+    if(isActiveButton[0] === "start") return;
+    ctx.fillStyle = "#1e1e1e";
+    ctx.beginPath();
+    ctx.roundRect(x, y, w, h, radius);
+    ctx.fill();
+};
+
+export function drawCloseButton(x , y){
+    x -= closeButtonSprite.sw;
+    if(isActiveButton[0] === "start") return;
+    ctx.drawImage(
+        buttonsSpriteSheet,
+        closeButtonSprite.x, closeButtonSprite.y, closeButtonSprite.w, closeButtonSprite.h,
+        x, y, closeButtonSprite.sw, closeButtonSprite.sh
+    );
+    closePos[0]={
+        x: x,
+        y: y,
+        w: closeButtonSprite.sw,
+        h: closeButtonSprite.sh,
+    };
+};
+
+export function drawTitle(x,y){
+    if (isActiveButton[0] === "start") return;
+    const sprite = startPageUI[isActiveButton[0]];
+    ctx.drawImage(
+        buttonsSpriteSheet,
+        sprite.x, sprite.y, sprite.w, sprite.h,
+        x - sprite.sw / 2 , y, sprite.sw, sprite.sh
+    )
+};
+
+export function showPlayerColorOption(x, y, w, h){
+    if(isActiveButton[0]!= "cars") return;
+    const players = [player1Sprite, player2Sprite, player3Sprite,player4Sprite];
+    const sheets = [playerSpriteSheet1, playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4];
+    const key = ["1", "2", "3", "4"];
+
+    const maxRow = 2;
+    const maxCol = 0;
+
+    let currentX = x + scale * 10;
+    let currentY = y + scale * 25;
+
+    let row = 0;
+    let col = 0;
+
+    for(let i =0; i < players.length ; i++){
+        const sprite = players[i];
+        const sheet = sheets[i];
+        console.log("currentX : ",currentX,"currentY : ", currentY);
+
+        ctx.drawImage(
+            sheet ,
+            sprite.up.x , sprite.up.y, sprite.up.w, sprite.up.h,
+            currentX, currentY, sprite.up.sw, sprite.up.sh
+        );
+        if(activeCar ==="player"+key[i]+"Sprite"){
+            ctx.drawImage(
+                buttonsSpriteSheet,
+                selectedButtonSprite.x, selectedButtonSprite.y, selectedButtonSprite.w, selectedButtonSprite.h,
+                currentX + selectedButtonSprite.sw + scale * 2, currentY,selectedButtonSprite.sw, selectedButtonSprite.sh
+            );
+        }
+        carPos[key[i]] = {
+            x: currentX,
+            y: currentY,
+            w: sprite.up.sw,
+            h: sprite.up.sh
+        }
+        if(col < maxCol ){
+            col++;
+            currentX += sprite.up.sw + scale * 5;
+        }
+        else{
+            row++;
+            col = 0;
+            currentX = x + scale * 10;
+            currentY += sprite.up.sh + scale * 15;
+        }
+    }
 };
 

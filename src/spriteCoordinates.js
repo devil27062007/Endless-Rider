@@ -132,7 +132,7 @@ export const roadObstackleSprites = {
     "cone": { x: 69, y: 5, w: 6, h: 7, sw: 6 * scale, sh: 7 * scale },
     "barricade": { x: 83, y: 6, w: 10, h: 6, sw: 10 * scale, sh: 6 * scale },
     "waterSpill": { x: 100, y: 5, w: 8, h: 8, sw: 8 * scale, sh: 8 * scale },
-};
+} ;
 
 export const stationMarking = {
     "arrowRight": { x: 7, y: 4, w: 6, h: 9, sw: 6 * scale, sh: 9 * scale },
@@ -141,12 +141,12 @@ export const stationMarking = {
     "30": { x: 49, y: 1, w: 14, h: 14, sw: 14 * scale, sh: 14 * scale }
 }
 
-export const startPageUI = {
+export const startPageUI =  {
     "start": { x: 0, y: 24, w: 32, h: 8, sw: 32 * (scale + 2), sh: 8 * (scale + 2)},
     "scene": { x: 0, y: 36, w: 32, h: 8, sw: 32 * (scale + 2), sh: 8 * (scale + 2)},
     "cars": { x: 0, y: 49, w: 32, h: 8, sw: 32 * (scale + 2), sh: 8 * (scale + 2)},
     "shop": { x: 0, y: 62, w: 32 , h: 8, sw: 32 * (scale + 2), sh: 8 * (scale + 2)}
-};
+} ;
 
 export const closeButtonSprite = { x: 5, y: 92, w: 11, h: 11, sw: 11 * scale, sh: 11 * scale};
 

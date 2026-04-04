@@ -215,6 +215,7 @@ document.addEventListener("click",(e) => {
     }
 });
 
+
 resizeCanvas();
 initPlayer();
 initSheet();
@@ -225,6 +226,7 @@ initPlayerIconSheet();
 playerSpriteSheet1.onload = onImageLoad;
 playerSpriteSheet2.onload = onImageLoad;
 playerSpriteSheet3.onload = onImageLoad;
+playerSpriteSheet4.onload = onImageLoad;
 summerDetailsSpriteSheet.onload = onImageLoad;
 summerDetails1SpriteSheet.onload = onImageLoad;
 summerDetails2SpriteSheet.onload = onImageLoad;
@@ -232,6 +234,10 @@ summerDetails3SpriteSheet.onload = onImageLoad;
 summerDetails4SpriteSheet.onload = onImageLoad;
 summerRoadSpriteSheet.onload = onImageLoad;
 summerGasStationSpriteSheet.onload = onImageLoad;
+winterRoadSpriteSheet.onload = onImageLoad;
+winterGasStationSpriteSheet.onload = onImageLoad;
+desertRoadSpriteSheet.onload = onImageLoad;
+desertGasStationSpriteSheet.onload = onImageLoad;
 npcSpriteSheet.onload = onImageLoad;
 damageSpriteSheet.onload = onImageLoad;
 fuelBarSpriteSheet.onload = onImageLoad ;
@@ -244,3 +250,4 @@ slimeSpriteSheet.onload = onImageLoad;
 cherrySpriteSheet.onload = onImageLoad;
 obstaclesSpriteSheet.onload = onImageLoad;
 stationMarkingSpriteSheet.onload = onImageLoad;
+buttonsSpriteSheet.onload = onImageLoad;
