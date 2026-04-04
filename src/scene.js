@@ -1,6 +1,6 @@
 import { player } from "./character.js";
-import { randomInt, summerDetails1SpriteSheet, summerDetails2SpriteSheet, summerDetails3SpriteSheet, summerDetails4SpriteSheet, canvas, ctx, summerDetailsSpriteSheet, summerGasStationSpriteSheet, summerRoadSpriteSheet } from "./main.js";
-import { summer, summerDetails } from "./spriteCoordinates.js";
+import { obstaclesSpriteSheet, stationMarkingSpriteSheet, randomInt, summerDetails1SpriteSheet, summerDetails2SpriteSheet, summerDetails3SpriteSheet, summerDetails4SpriteSheet, canvas, ctx, summerDetailsSpriteSheet, summerGasStationSpriteSheet, summerRoadSpriteSheet } from "./main.js";
+import { roadObstackleSprite, scale, stationMarking, summer, summerDetails } from "./spriteCoordinates.js";
 
 let currentScene = "summer";
 let nextSceneSpawnTime = 100;
@@ -68,14 +68,22 @@ export function initRoadPos() {
             detailsForRight[i][j] = randomDetailsGeneration();
         }
     }
-
 };
 
+export function resetScene(){
+    roads = [];
+    detailsForLeft = [];
+    detailsForRight = [];
+    obstacles = [];
+    gasStationObstacles = [];
+    roadMarkings = [];
+}
+
 export const scene = ["summer", "winter", "desert"];
-export const roads = [];
+export let roads = [];
 export const detailsForLeft = [];
 export const detailsForRight = [];
-
+export let obstacles = [];
 
 export function randomSceneGeneration(delta) {
     currentTime += delta;
