@@ -1,19 +1,19 @@
 export let health = [1, 1, 0];
 
-export function deductHealth(){
-    const lastIndexOfOne = health.lastIndexOfOne[1];
-    if (lastIndexOfOne !== -1){
+export function deductHealth() {
+    const lastIndexOfOne = health.lastIndexOf(1);
+    if (lastIndexOfOne !== -1) {
         health[lastIndexOfOne] = 0;
     }
-    if(checkLife() === -1) {
+    if (checkLife() === -1) {
         console.log("player is dead");
     }
 };
 
-export function checkLife(){
-    return health.lastIndexOf[1];
+export function checkLife() {
+    return health.lastIndexOf(1);
 };
 
-export function resetHealth(){
+export function resetHealth() {
     health = [1, 1, 1];
 };

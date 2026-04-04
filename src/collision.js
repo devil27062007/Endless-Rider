@@ -1,6 +1,6 @@
-import { player , playerSprite } from "./character";
+import { player , playerSprite } from "./character.js";
 import { ctx } from "./main.js";
-import { obstacles } from "./scene";
+import { obstacles } from "./scene.js";
 
 const playerCollisionBox = {
     "up": [
@@ -49,4 +49,37 @@ function getPlayerpoints(){
     ]
 
     let angle = 0;
+    if(player.currentFacing === "upRight") angle = 35 * (Math.PI / 180);
+    if(player.currentFacing === "upLeft") angle -= 35 * (Math.PI / 180);
+
+    return basePoints.map(p => rotatePoint(p.x, p.y, cx, cy, angle));
 }
+
+export function drawPlayerBox(){
+}
+//collision for obstacles and npc
+export function checkCollision(){
+    let check = checkObstacleCollision();
+    if(check){
+        return true;
+    }
+    check = checkNPCCarCollision();
+    if(check){
+        return true;
+    }
+
+}
+
+export function checkObstacleCollision(){
+    for(let i = 0; i < obstacles.length; i++){
+        const obs = obstacles[i];
+    };
+};
+
+export function chechGasStationObstacleCollision(){
+
+};
+
+export function checkNPCCarCollision(){
+
+};

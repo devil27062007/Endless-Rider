@@ -1,21 +1,21 @@
 
 
-import { drawCars, spawnCars, updateCars} from "./car.js";
+import { drawCars, spawnCars, updateCars } from "./car.js";
 import { ctx, canvas } from "./main.js";
-import { drawObstacles, drawScene, spawnObstacles, updateDetails, updateDetails, updateRoad} from "./scene.js";
+import { drawObstacles, drawScene, spawnObstacles, updateDetails, updateRoad } from "./scene.js";
 
 let animationId = null;
 let lastTime = 0;
 
-export function startPage(){
+export function startPage() {
     animationId = requestAnimationFrame(startPageLoop);
 };
 
-export function startPageLoop(currentTime){
+export function startPageLoop(currentTime) {
 
-    ctx.clearRect(0, 0, canvas.width , canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     let delta = (currentTime - lastTime) / 1000;
-    if(delta > 0.1) delta = 0.1;
+    if (delta > 0.1) delta = 0.1;
 
     lastTime = currentTime;
 
@@ -33,3 +33,21 @@ export function startPageLoop(currentTime){
 
     animationId = requestAnimationFrame(startPageLoop);
 };
+
+export function stopStartPageLoop() {
+    cancelAnimationFrame(animationId);
+    animationId = null;
+    lastTime = 0;
+
+}
+
+export function drawStartPage(delta) {
+
+    spawnObstacles(delta);
+    spawnCars(delta);
+
+    updateDetails(delta);
+    updateRoad(delta);
+
+    drawScene(delta);
+}
