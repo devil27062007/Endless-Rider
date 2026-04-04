@@ -11,5 +11,5 @@ export function deductHealth(){
 };
 
 export function checkLife(){
-    return health.lastIndexOf(1);
+    return health.lastIndexOf[1];
 };
