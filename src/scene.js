@@ -87,7 +87,7 @@ export let obstacles = [];
 export let gasStationObstacles = [];
 export const roadMarkings = [];
 export const spawnObstacleTime = 2;
-export const currentSpawnObstacleTime = 0;
+export let currentSpawnObstacleTime = 0;
 
 export function randomSceneGeneration(delta) {
     currentTime += delta;
@@ -285,31 +285,31 @@ export function spawnGasStaionObstacles() {
     })
 };
 
-export function spawnObstacles(delta){
+export function spawnObstacles(delta) {
     currentSpawnObstacleTime += delta;
-    if(currentSpawnObstacleTime >= spawnObstacleTime){
+    if (currentSpawnObstacleTime >= spawnObstacleTime) {
         currentSpawnObstacleTime -= spawnObstacleTime;
         const key = Object.keys(roadObstackleSprites);
         const spriteKey = key[randomInt(0, key.length - 1)];
         let x;
         let isDeadly;
-        if(spriteKey === "crack" || spriteKey ==="waterSpill" || spriteKey === "oilSpill"){
+        if (spriteKey === "crack" || spriteKey === "waterSpill" || spriteKey === "oilSpill") {
             isDeadly = false;
             x = randomInt(posX, posX + summer["road"].sw - roadObstackleSprites[spriteKey].sw);
         }
-        else if(spriteKey === "arrow"){
+        else if (spriteKey === "arrow") {
             isDeadly = false;
             x = posX + (roadObstackleSprites[spriteKey].sw * 3);
         }
-        else if(spriteKey === "potHole"){
+        else if (spriteKey === "potHole") {
             isDeadly = true;
             x = randomInt(posX, posX + summer["road"].sw)
         }
-        else{
+        else {
             isDeadly = true;
-            x = randomInt(posX, posX+summer["road"].sw);
+            x = randomInt(posX, posX + summer["road"].sw);
         }
-        obstackles.push({
+        obstacles.push({
             x: x,
             y: -500,
             isDeadly: isDeadly,
@@ -319,8 +319,8 @@ export function spawnObstacles(delta){
     }
 };
 
-export function drawObstacles(){
-    for(let i= 0;i<obstacles.length; i++){
+export function drawObstacles() {
+    for (let i = 0; i < obstacles.length; i++) {
         const obs = obstacles[i];
         const sprite = roadObstackleSprites[obs.sprite];
         ctx.drawImage(
@@ -331,27 +331,27 @@ export function drawObstacles(){
     }
 };
 
-export function drawStationObstacles(y){
-    for(let i = 0; i< gasStationObstacles.length; i++){
+export function drawStationObstacles(y) {
+    for (let i = 0; i < gasStationObstacles.length; i++) {
         const obs = gasStationObstacles[i];
         const sprite = roadObstackleSprites[onscroll.sprite];
         ctx.drawImage(
             obstaclesSpriteSheet,
             sprite.x, sprite.y, sprite.w, sprite.h,
-            obs.x, y- sprite.sh * 14, sprite.sw, sprite.sh
+            obs.x, y - sprite.sh * 14, sprite.sw, sprite.sh
         );
     }
 }
 
-export function drawPetrolPumpMarking(){
+export function drawPetrolPumpMarking() {
     return true;
 };
 
-export function drawArrowToStation(y){
+export function drawArrowToStation(y) {
     const sprite = stationMarking["arrowRight"];
     ctx.drawImage(
         stationMarkingSpriteSheet,
         sprite.x, sprite.y, sprite.w, sprite.h,
-        posX + summer["road"].sw / 2 + sprite.sw, y- sprite.sh * 7, sprite.sh * 7,sprite.sw,sprite.sh
+        posX + summer["road"].sw / 2 + sprite.sw, y - sprite.sh * 7, sprite.sh * 7, sprite.sw, sprite.sh
     );
 };

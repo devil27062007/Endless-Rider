@@ -120,3 +120,9 @@ export const stationMarking = {
     "60": { x: 33, y: 1, w: 14, h: 14, sw: 14 * scale, sh: 14 * scale },
     "30": { x: 49, y: 1, w: 14, h: 14, sw: 14 * scale, sh: 14 * scale }
 }
+
+export const startPageUI = {
+    "start": { x: 0, y: 24, w: 32, h: 8, sw: 32 * scale, sh: 8 * scale},
+    "scene": { x: 0, y: 36, w: 32, h: 8, sw: 32 * scale, sh: 8 * scale},
+    "color": { x: 0, y: 49, w: 32, h: 8, sw: 32 * scale, sh: 8 * scale},
+};

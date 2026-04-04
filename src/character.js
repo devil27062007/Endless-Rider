@@ -1,4 +1,5 @@
 import { drawCars , spawnCars , updateCars } from "./car.js" ;
+import { drawPlayerBox } from "./collision.js";
 import { deductHealth } from "./health.js";
 import { canvas, ctx, keys, playerSpriteSheet1 } from "./main.js" ;
 import { drawObstacles, spawnObstacles , updateObstacles , drawScene,getRoadBelowPlayer, posX, roads, updateRoad , updateDetails } from "./scene.js" ;
@@ -122,10 +123,10 @@ export function updatePlayer(delta) {
             deductHealth();
         }
     } else {
-        currentOffRoadTime = 0;
+        currentOffRoadTime = 0 ;
     }
 
-    let steeringSpeed = 150;
+    let steeringSpeed = 150 ;
 
     player.x += moveX * steeringSpeed * delta;
 };
@@ -163,6 +164,7 @@ export function gameLoop(currentTime) {
     drawPlayer();
     drawCars();
     
+    drawPlayerBox();//for debugging purpose . 
     animationId = requestAnimationFrame(gameLoop);
 };
 
