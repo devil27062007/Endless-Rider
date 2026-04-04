@@ -1,9 +1,9 @@
 import { drawCars , spawnCars , updateCars } from "./car.js" ;
 import { drawPlayerBox } from "./collision.js";
 import { deductHealth } from "./health.js";
-import { canvas, ctx, keys, playerSpriteSheet1 } from "./main.js" ;
-import { drawObstacles, spawnObstacles , updateObstacles , drawScene,getRoadBelowPlayer, posX, roads, updateRoad , updateDetails } from "./scene.js" ;
-import { player1Sprite, summer } from "./spriteCoordinates.js" ;
+import { canvas, ctx, keys, playerSpriteSheet1 , playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4} from "./main.js" ;
+import { drawObstacles, spawnObstacles , updateObstacles , drawScene,getRoadBelowPlayer,randomSceneGeneration, posX, roads, updateRoad , updateDetails } from "./scene.js" ;
+import { player1Sprite, player2Sprite, player3Sprite, player4Sprite, summer } from "./spriteCoordinates.js" ;
 import { drawFullUI } from "./ui.js";
 
 export let defaultPlayerSheet ;
@@ -38,6 +38,15 @@ export function initPlayer() {
 
     player.x = canvas.width / window.devicePixelRatio / 2 - (summer["road"].sw) / 2 + player1Sprite["up"].sw + 22;
     player.y = canvas.height / window.devicePixelRatio / 2 + 100;
+    const playerSheet = [playerSpriteSheet1, playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4];
+};
+
+export const playerKey = [player1Sprite ,player2Sprite, player3Sprite, player4Sprite];
+export const playerSheet = [];
+
+export function changeDefaultPlayer(key){
+    playerSprite = playerKey[key];
+    defaultPlayerSheet = playerSheet[key];
 };
 
 export function resetPlayer() {
@@ -158,6 +167,8 @@ export function gameLoop(currentTime) {
     updateDetails(delta);
     updateObstacles(delta);
 
+    randomSceneGeneration(delta);
+    
     drawScene();
     drawFullUI(delta);
     drawObstacles();

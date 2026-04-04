@@ -18,6 +18,9 @@ playerSpriteSheet2.src = "assets/Cars/Player_red.png";
 export const playerSpriteSheet3 = new Image();
 playerSpriteSheet3.src = "assets/Cars/Player_yellow.png";
 
+export const playerSpriteSheet4 = new Image();
+playerSpriteSheet4.src = "assets/Cars/Player_green.png";
+
 export const summerRoadSpriteSheet = new Image();
 summerRoadSpriteSheet.src = "assets/Levels/Summer_road.png";
 

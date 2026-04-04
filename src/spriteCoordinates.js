@@ -12,11 +12,21 @@ export const player1Sprite = {
 };
 
 export const player2Sprite = {
-
+    up: { x: 4, y: 2, w: 9, h: 13, sw: 9 * scale, sh: 13 * scale},
+    upRight: { x: 18, y: 2, w: 14, h: 14, sw: 14 * scale, sh: 14 * scale },
+    upLeft: { x: 113, y: 2, w: 14, h: 14, sw: 14 * scale, sh: 14 * scale}
 };
 
 export const player3Sprite = {
+    up: { x: 4, y: 2, w: 9, h: 13, sw: 9 * scale, sh: 13 * scale},
+    upRight: { x: 18, y: 2, W: 14, h: 14, sw: 14 * scale, sh: 14 * scale},
+    upLeft: { x: 113, y: 2, w: 14, h: 14, sw: 14 * scale, sh: 14 * scale}
+};
 
+export const player4Sprite = {
+    up: { x: 4, y: 2, w: 9, h: 13, sw: 9 * scale, sh: 13 * scale},
+    upRight: { x: 18, y: 2, w: 14, h: 14, sw: 14 * scale, sh: 14 * scale},
+    upLeft: { x: 113, y: 2, w: 14, h: 14, sw: 14 * scale , sh: 14 * scale}
 };
 
 export const npc1Sprite = {
@@ -52,7 +62,17 @@ export const summerDetails = {
     details3: { x: 0, y: 0, w: 64, h: 16, sw: 64 * scale, sh: 16 * scale },
     details4: { x: 0, y: 0, w: 64, h: 16, sw: 64 * scale, sh: 16 * scale },
     details5: { x: 0, y: 0, w: 64, h: 16, sw: 64 * scale, sh: 16 * scale }
-}
+};
+
+export const winter = {
+    road:{ x: 0, y: 0, w: 64, h: 64, sw: 64 * scale, sh: 64 * scale, stackHeight: 190},
+    gasStation: { x: 0, y: 0, w: 128, h: 304, sw: 128 * scale, sh: 304 * scale, stackHeight: 190}
+};
+
+export const desert = {
+    road: { x: 0, y: 0, w: 64, h: 64, sw: 64 * scale, sh: 64 * scale, stackHeight: 190},
+    gasStation: { x: 0, y: 0, w: 128, h: 304, sw: 128 * scale,sh: 304 * scale, stackHeight: 190 }
+};
 
 export const ui = {
     full: { x: 0, y: 0, w: 32, h: 176, sw: 32 * (scale + 2), sh: 176 * scale },
@@ -122,7 +142,8 @@ export const stationMarking = {
 }
 
 export const startPageUI = {
-    "start": { x: 0, y: 24, w: 32, h: 8, sw: 32 * scale, sh: 8 * scale},
-    "scene": { x: 0, y: 36, w: 32, h: 8, sw: 32 * scale, sh: 8 * scale},
-    "color": { x: 0, y: 49, w: 32, h: 8, sw: 32 * scale, sh: 8 * scale},
+    "start": { x: 0, y: 24, w: 32, h: 8, sw: 32 * (scale + 2), sh: 8 * (scale + 2)},
+    "scene": { x: 0, y: 36, w: 32, h: 8, sw: 32 * (scale + 2), sh: 8 * (scale + 2)},
+    "cars": { x: 0, y: 49, w: 32, h: 8, sw: 32 * (scale + 2), sh: 8 * (scale + 2)},
+    "shop": { x: 0, y: 62, w: 32 , h: 8, sw: 32 * (scale + 2), sh: 8 * (scale + 2)}
 };
