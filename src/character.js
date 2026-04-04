@@ -39,7 +39,7 @@ export function initPlayer() {
     player.y = canvas.height / window.devicePixelRatio / 2 + 100;
 };
 
-export function resetPlayer(){
+export function resetPlayer() {
     player.speed = 100;
     player.isDead = false;
     player.fuel = 1;
@@ -84,7 +84,7 @@ export function updatePlayer(delta) {
         }
     }
     else if(keys.down){
-        player.speed -= delta * 200;
+        player.speed -= delta * 200 - 0.5;
         if(player.speed < player.minSpeed) player.speed = player.idleSpeed;
     }
     else{
@@ -117,11 +117,11 @@ export function updatePlayer(delta) {
 
     if(player.x <= posX || player.x + playerSprite[player.currentFacing].sw >= roadRight){
         currentOffRoadTime += delta;
-        if(currentOffRoadTime >= maxOffRoadTime){
+        if( currentOffRoadTime >= maxOffRoadTime ){
             currentOffRoadTime -= maxOffRoadTime;
             deductHealth();
         }
-    }else {
+    } else {
         currentOffRoadTime = 0;
     }
 

@@ -2,7 +2,7 @@ export let isGameOver = false;
 let lastTime  = 0;
 let animationId = null;
 
-export function gameOverPage(currentTime){
+export function gameOverPage(currentTime) {
     let delta = (currentTime - lastTime) / 1000;
     if(delta > 0.1)  delta = 0.1;
     drawGameOverScene();
@@ -14,16 +14,16 @@ export function stopGameOverPage() {
     animationId = null;
 }
 
-export function drawGameOverScene(){
+export function drawGameOverScene() {
 
 };
 
-export function setGameOver(){
+export function setGameOver() {
     isGameOver = true;
     drawGameOverScene();
 }
 
-export function resetGameOver(){
+export function resetGameOver() {
     isGameOver = false;
     stopGameOverPage();
 }
