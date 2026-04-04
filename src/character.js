@@ -43,31 +43,31 @@ let lastTime = 0;
 export let angle = 0;
 let animationId = null ;
 
-export function updatePlayer(delta){
+export function updatePlayer(delta) {
     
-    let moveX = 0;
-    let moveY = 0;
+    let moveX = 0 ;
+    let moveY = 0 ;
 
     let activeMaxSpeed = keys.shift && player.nitro > 0 ? player.maxSpeed + 75 : player.maxSpeed;
 
     fuelCurrentTime += delta;
-    if(fuelCurrentTime >= fuelDropTime){
+    if(fuelCurrentTime >= fuelDropTime) {
         fuelCurrentTime -= fuelDropTime ;
-        if(player.speed > player.idleSpeed) player.fuel -= 0.03;
-        else if(player.speed === player.idleSpeed) player.fuel -= 0.2;
-        else player.fuel -= 0.01;
+        if(player.speed > player.idleSpeed) player.fuel -= 0.03 ;
+        else if(player.speed === player.idleSpeed) player.fuel -= 0.2 ;
+        else player.fuel -= 0.01 ;
     }
 
-    if(keys.up){
+    if(keys.up) {
 
-        if(keys.shift && player.nitro > 0){
+        if(keys.shift && player.nitro > 0) {
             player.nitro -= delta * 50;
 
-            if(player.nitro < 0) player.nitro = 0;
+            if(player.nitro < 0) player.nitro = 0 ;
         }
 
-        if(player.speed < activeMaxSpeed){
-            let acceleration = keys.shift ? 200 : 300;
+        if(player.speed < activeMaxSpeed) {
+            let acceleration = keys.shift ? 200 : 300 ;
             player.speed += delta * acceleration;
 
             if (player.speed > activeMaxSpeed) player.speed = activeMaxSpeed;

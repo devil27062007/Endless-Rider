@@ -222,7 +222,7 @@ export function drawDetails() {
 export function getRoadBelowPlayer(){
     let currentY = posY;
     for(let i = 0; i< roads.length; i++){
-        const road = summer[road[i]];
+        const road = summer[roads[i]];
         const visualOffset = road.sh - road.stackHeight;
         const roadTop = currentY - road.stackHeight - visualOffset;
         const roadBottom = currentY;

@@ -1,7 +1,7 @@
 export const health = [1, 1, 0];
 
 export function deductHealth(){
-    const lastIndexOfOne = health.lastIndexOfOne(1);
+    const lastIndexOfOne = health.lastIndexOfOne[1];
     if (lastIndexOfOne !== -1){
         health[lastIndexOfOne] = 0;
     }
