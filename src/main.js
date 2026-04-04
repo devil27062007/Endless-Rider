@@ -1,13 +1,15 @@
 import { initLanes } from "./car.js";
 import { gameLoop, initPlayer, player } from "./character.js";
 import { initRoadPos, initSheet } from "./scene.js";
-import { startPage , startPageLoop } from "./startPage.js";
-import { initPlayerIconSheet } from "./ui.js";
+import { scale } from "./spriteCoordinates.js";
+import { startPage , startPageLoop ,activeCar, activeScenes , clearIsActiveButton, isActiveButton, isClickOnCar,isClickOncloseButton,isClickOnSceneButton,isClickOnScene,isClickOnShopButton, isClickOnStartButton, pos, isClickOnColorButton} from "./startPage.js";
+import { initPlayerIconSheet,  } from "./ui.js";
 
 export const canvas = document.getElementById("game-canvas");
 export const ctx = canvas.getContext("2d");
 
-export let isGameRunning = true;
+export let isGameRunning = false;
+export let isDead = false;
 
 export const playerSpriteSheet1 = new Image();
 playerSpriteSheet1.src = "assets/Cars/Player_blue.png";
@@ -41,6 +43,18 @@ summerDetails3SpriteSheet.src = "assets/Levels/Summer_details3.png";
 
 export const summerDetails4SpriteSheet = new Image();
 summerDetails4SpriteSheet.src = "assets/Levels/Summer_details4.png";
+
+export const winterRoadSpriteSheet = new Image;
+winterRoadSpriteSheet.src = "assets/Levels/Winter_road.png";
+
+export const winterGasStationSpriteSheet = new Image();
+winterGasStationSpriteSheet.src = "assets/Levels/Winter_gas_station.png";
+
+export const desertRoadSpriteSheet = new Image();
+desertRoadSpriteSheet.src = "assets/Levels/Desert_road.png";
+
+export const desertGasStationSpriteSheet = new Image();
+desertGasStationSpriteSheet.src = "assets/Levels/Desert_gas_station.png";
 
 export const npcSpriteSheet = new Image();
 npcSpriteSheet.src = "assets/Cars/NPC_cars.png";
@@ -78,6 +92,9 @@ obstaclesSpriteSheet.src = "assets/Props/Misc_props.png";
 export const stationMarkingSpriteSheet = new Image();
 stationMarkingSpriteSheet.src = "assets/Props/Road_markings.png";
 
+export const buttonsSpriteSheet = new Image();
+buttonsSpriteSheet.src = "assets/UI/Race_progress.png";
+
 export const keys = {
     up: false,
     right: false,
@@ -108,7 +125,7 @@ window.addEventListener("resize", () => {
 });
 
 let loadedCount = 0;
-const imageCount = 22;
+const imageCount = 28;
 
 function onImageLoad() {
     loadedCount++;
@@ -120,6 +137,24 @@ function onImageLoad() {
         requestAnimationFrame(gameLoop);
     }
 };
+
+export function getCurrentMousePos(e){
+
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+
+    const cssX = e.clientX - rect.left;
+    const cssY = e.clientY - rect.top; 
+
+    const scaleX =canvas.width / dpr / rect.width ;
+    const scaleY = canvas.height / dpr / rect.height;
+
+    return {
+        x: cssX * scaleX,
+        y: cssY * scaleY,
+    }
+
+}
 
 document.addEventListener("keydown", (e) => {
     switch (e.key.toLowerCase()) {
@@ -151,6 +186,34 @@ document.addEventListener("keyup", (e) => {
     }
 });
 
+document.addEventListener("click",(e) => {
+    const mousePos = getCurrentMousePos(e);
+
+    if(isClickOnStartButton(mousePos.x, mousePos.y) && !isGameRunning && !isDead){
+
+        isActiveButton[0] = "start";
+    }
+    if(isClickOnSceneButton(mousePos.x,mousePos.y) && !isGameRunning && !isDead){
+
+        isActiveButton[0] = "scene";
+    }
+    if(isClickOnColorButton(mousePos.x, mousePos.y) && !isGameRunning && !isDead){
+
+        isActiveButton[0] = "cars";
+    }
+    if(isClickOnShopButton(mousePos.x , mousePos.y) && !isGameRunning && !isDead){
+        isActiveButton["shop"];
+    }
+    if(isClickOnCar(mousePos.x, mousePos.y) && !isGameRunning && !isDead){
+        console.log(activeCar);
+    }
+    if(isClickOnScene(mousePos.x, mousePos.y) && !isGameRunning && !isDead){
+        console.log(activeScenes);
+    }
+    if(isClickOncloseButton(mousePos.x, mousePos.y) && !isGameRunning && !isDead){
+        clearIsActiveButton();
+    }
+});
 
 resizeCanvas();
 initPlayer();

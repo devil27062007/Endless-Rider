@@ -147,3 +147,7 @@ export const startPageUI = {
     "cars": { x: 0, y: 49, w: 32, h: 8, sw: 32 * (scale + 2), sh: 8 * (scale + 2)},
     "shop": { x: 0, y: 62, w: 32 , h: 8, sw: 32 * (scale + 2), sh: 8 * (scale + 2)}
 };
+
+export const closeButtonSprite = { x: 5, y: 92, w: 11, h: 11, sw: 11 * scale, sh: 11 * scale};
+
+export const selectedButtonSprite = { x: 3, y: 105, w: 15, h: 11, sw: 15 * scale, sh: 11 * scale};
