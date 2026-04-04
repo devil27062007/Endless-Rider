@@ -105,12 +105,6 @@ export function updateRoad(delta) {
 export function updateDetails(delta) {
 
     detailsPosY += delta * (player.speed + 200);
-    //detailsPosY += delta * player.speed;
-    //const tileH = detailsMap[currentScene]["details1"].sh;
-    //if(detailsPosY >= tileH){
-    //    detailsPosY -= tileH;
-    //    details.splice(0, sceneNeedX);
-    //    for(let i = 0; i < sceneNeedX ; i++){
     const detailH = detailsMap[currentScene]["details1"].sh;
     if (detailsPosY >= detailH) {
         detailsPosY -= detailH;
@@ -142,7 +136,7 @@ export function refillRoads() {
         if (roadSinceLastBunk > roadUntillNextBunk) {
             roadSinceLastBunk = 0;
             roadUntillNextBunk += bunkSpacingIncrease;
-            bunkSpacingIncrease += 5;
+            bunkSpacingIncrease += 2;
             roads.push("gasStation");
             totalH += summer["gasStation"].stackHeight;
             while (totalH < screenH * 3) {
@@ -224,3 +218,18 @@ export function drawDetails() {
         currentH += detailsMap[currentScene]["details1"].sh - 1;
     };
 };
+
+export function getRoadBelowPlayer(){
+    let currentY = posY;
+    for(let i = 0; i< roads.length; i++){
+        const road = summer[road[i]];
+        const visualOffset = road.sh - road.stackHeight;
+        const roadTop = currentY - road.stackHeight - visualOffset;
+        const roadBottom = currentY;
+        if(player.y >= roadTop && player.y <= roadBottom){
+            return road;
+        }
+        currentY -= road.stackHeight;
+    }
+    return summer["road"];
+}
