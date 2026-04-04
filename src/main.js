@@ -57,16 +57,16 @@ export const numberSpriteSheet = new Image();
 numberSpriteSheet.src = "assets/UI/Speed_indicator_numbers.png";
 
 export const carrotSpriteSheet = new Image();
-carrotSpriteSheet.src = "assets/Player_icons/Carrot.png";
+carrotSpriteSheet.src = "assets/Player_sprite_icons/Carrot.png";
 
 export const cherrySpriteSheet = new Image();
-cherrySpriteSheet.src = "assets/Player_icons/Cherry.png";
+cherrySpriteSheet.src = "assets/Player_sprite_icons/Cherry.png";
 
 export const lemonSpriteSheet = new Image();
-lemonSpriteSheet.src = "assets/Player_icons/Lemon.png";
+lemonSpriteSheet.src = "assets/Player_sprite_icons/Lemon.png";
 
 export const slimeSpriteSheet = new Image();
-slimeSpriteSheet.src = "assets/Player_icons/slime.png";
+slimeSpriteSheet.src = "assets/Player_sprite_icons/slime.png";
 
 export const keys = {
     up: false,
@@ -156,4 +156,12 @@ summerDetails4SpriteSheet.onload = onImageLoad;
 summerRoadSpriteSheet.onload = onImageLoad;
 summerGasStationSpriteSheet.onload = onImageLoad;
 npcSpriteSheet.onload = onImageLoad;
-
+damageSpriteSheet.onload = onImageLoad;
+fuelBarSpriteSheet.onload = onImageLoad ;
+playerIndicatoreSpriteSheet.onload = onImageLoad;
+fullSpriteSheet.onload = onImageLoad;
+numberSpriteSheet.onload = onImageLoad;
+carrotSpriteSheet.onload = onImageLoad;
+lemonSpriteSheet.onload = onImageLoad;
+slimeSpriteSheet.onload = onImageLoad;
+cherrySpriteSheet.onload = onImageLoad;
