@@ -1,24 +1,24 @@
+import { cars } from "./car.js";
 import { player , playerSprite } from "./character.js";
 import { ctx } from "./main.js";
-import { obstacles } from "./scene.js";
+import { gasStationObstacles, obstacles } from "./scene.js";
 
-const playerCollisionBox = {
-    "up": [
-        {xRatio: 0.1, yRatio: 0, wRatio: 0.7, hRatio: 0.1},
-        {xRatio: 0, yRatio: 0.12, wRatio: 0.9, hRatio: 0.5},
-        {xRatio: 0, yRatio: 0.6, wRatio: 0.9, hRatio: 0.3}
-    ],
-    "upRight":[
-        {xRatio: 0.1, yRatio: 0.2, wRatio: 0.3, hRatio: 0.9},
-        {xRatio: 0, yRatio: 0, wRatio: 0, hRatio: 0 },
-        {xRatio: 0, yRatio: 0, wRatio: 0, hRatio: 0},
-    ],
-    "upLeft":[
-        { xRatio: 0, yRatio: 0, wRatio: 0, hRatio: 0},
-        { xRatio: 0, yRatio: 0, wRatio: 0, hRatio: 0},
-        { xRatio: 0, yRatio: 0, wRatio: 0, hRatio: 0}
-    ]
-};
+const directionAngles = {
+    up: -Math.PI / 2,
+    upRight: -Math.PI / 4,
+    upLeft: -3 * Math.PI / 4,
+}
+
+export function getCarCorners(player, paddingX = 4, paddingY = 4){
+    const angle = directionAngles[player.currentFacing] ?? 0;
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    const w = player.w / 2 - paddingX;
+    const h = player.h / 2 - paddingY;
+
+    const cx = player.x + player.w / 2;
+    const cy = player.y + player.h / 2;
+}
 
 function rotatePoint(px, py, cx, cy, angleRad){
     const cos = Math.cos(angleRad);

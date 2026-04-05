@@ -1,3 +1,4 @@
+import { setIsDead } from "./main.js"; 
 export let health = [1, 1, 0] ;
 
 export function deductHealth() {
@@ -7,6 +8,7 @@ export function deductHealth() {
     }
     if (checkLife() === -1) {
         console.log("player is dead") ;
+        setIsDead();
     }
 } ;
 

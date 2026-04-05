@@ -1,8 +1,9 @@
-import { initLanes } from "./car.js";
-import { gameLoop, initPlayer, player } from "./character.js";
-import { initRoadPos, initSheet } from "./scene.js";
+import { initLanes ,resetCars } from "./car.js";
+import { gameLoop, initPlayer, resetPlayer } from "./character.js";
+import { resetHealth } from "./health.js";
+import { initRoadPos, initSheet , resetScene } from "./scene.js";
 import { scale } from "./spriteCoordinates.js";
-import { startPage, startPageLoop, activeCar, activeScenes, clearIsActiveButton, isActiveButton, isClickOnCar, isClickOncloseButton, isClickOnSceneButton, isClickOnScene, isClickOnShopButton, isClickOnStartButton, pos, isClickOnColorButton } from "./startPage.js";
+import { startPage, startPageLoop, activeCar, activeScenes, clearIsActiveButton, isActiveButton, isClickOnCar, isClickOncloseButton, isClickOnSceneButton, isClickOnScene, stopStartPageLoop, isClickOnStartButton, pos, isClickOnColorButton } from "./startPage.js";
 import { initPlayerIconSheet, } from "./ui.js";
 
 export const canvas = document.getElementById("game-canvas");
@@ -95,13 +96,16 @@ stationMarkingSpriteSheet.src = "assets/Props/Road_markings.png";
 export const buttonsSpriteSheet = new Image();
 buttonsSpriteSheet.src = "assets/UI/Race_progress.png";
 
+export const gameOverSpriteSheet = new Image();
+gameOverSpriteSheet.src = "assets/UI/Game_over.png";
+
 export const keys = {
     up: false,
     right: false,
     left: false,
     down: false,
     shift: false,
-}
+};
 
 function resizeCanvas() {
     const dpr = window.devicePixelRatio || 1;
@@ -125,7 +129,7 @@ window.addEventListener("resize", () => {
 });
 
 let loadedCount = 0;
-const imageCount = 28;
+const imageCount = 29;
 
 function onImageLoad() {
     loadedCount++;
@@ -154,7 +158,30 @@ export function getCurrentMousePos(e) {
         y: cssY * scaleY,
     }
 
+};
+
+export function resetIsDead(){
+    isDead = false;
+};
+
+export  function setIsDead(){
+    isDead = true;
+};
+
+export function setIsGameRunning(){
+    isGameRunning = true;
+};
+
+export function resetIsGameRunning(){
+    isGameRunning = false;
 }
+
+export function resetAll(){
+    resetCars();
+    resetPlayer();
+    resetHealth();
+    resetScene();
+};
 
 document.addEventListener("keydown", (e) => {
     switch (e.key.toLowerCase()) {
@@ -192,6 +219,11 @@ document.addEventListener("click", (e) => {
     if (!isGameRunning && !isDead) {
         if (isClickOnStartButton(mousePos.x, mousePos.y)) {
             isActiveButton[0] = "start";
+
+            stopStartPageLoop();
+            setIsGameRunning();
+            resetAll();
+            requestAnimationFrame(gameLoop);
         }
         if (isClickOnSceneButton(mousePos.x, mousePos.y)) {
             isActiveButton[0] = "scene";
@@ -199,9 +231,9 @@ document.addEventListener("click", (e) => {
         if (isClickOnColorButton(mousePos.x, mousePos.y)) {
             isActiveButton[0] = "cars";
         }
-        if (isClickOnShopButton(mousePos.x, mousePos.y)) {
-            isActiveButton["shop"];
-        }
+        //if (isClickOnShopButton(mousePos.x, mousePos.y)) {
+        //    isActiveButton[0] = "shop";
+        //}
         if (isClickOnCar(mousePos.x, mousePos.y)) {
             console.log(activeCar);
         }
@@ -212,6 +244,7 @@ document.addEventListener("click", (e) => {
             clearIsActiveButton();
         }
     }
+
 });
 
 
@@ -250,3 +283,4 @@ cherrySpriteSheet.onload = onImageLoad;
 obstaclesSpriteSheet.onload = onImageLoad;
 stationMarkingSpriteSheet.onload = onImageLoad;
 buttonsSpriteSheet.onload = onImageLoad;
+gameOverSpriteSheet.onload =  onImageLoad;
