@@ -36,7 +36,7 @@ export const pseudoPos = {
     y: 0,
 };
 
-export function initPlayer() {
+export function initPlayer(){
     defaultPlayerSheet = playerSpriteSheet1;
     playerSprite = player1Sprite;
 
@@ -53,7 +53,7 @@ export function changeDefaultPlayer(key){
     defaultPlayerSheet = playerSheet[key];
 };
 
-export function resetPlayer() {
+export function resetPlayer(){
     player.speed = 100;
     player.fuel = 1;
     player.x = canvas.width / window.devicePixelRatio / 2 - (summer["road"].sw) / 2 + playerSprite["up"].sw + 22;
@@ -64,7 +64,7 @@ let lastTime = 0;
 export let angle = 0;
 let animationId = null ;
 
-export function updatePlayer(delta) {
+export function updatePlayer(delta){
     if ( isDead ) return;
     let moveX = 0 ;
     let moveY = 0 ;
@@ -85,7 +85,7 @@ export function updatePlayer(delta) {
 
     if(keys.up) {
 
-        if(keys.shift && player.nitro > 0) {
+        if(keys.shift && player.nitro > 0){
             player.nitro -= delta * 50;
 
             if(player.nitro < 0) player.nitro = 0 ;

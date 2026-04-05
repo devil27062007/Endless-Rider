@@ -36,14 +36,14 @@ export function project(corners, axis) {
     return { min: Math.min(...dots), max: Math.max(...dots) };
 };
 
-export function getAxes(angle) {
+export function getAxes(angle){
     return [
         { x: Math.cos(angle), y: Math.sin(angle) },
         { x: -Math.sin(angle), y: Math.cos(angle) }
     ]
 };
 
-export function isColliding(car) {
+export function isColliding(car){
     const cornerA = getCarCorners(player);
     const cornerB = getCarCorners(car);
 
@@ -63,7 +63,7 @@ export function isColliding(car) {
 
 
 //collision for obstacles and npc
-export function checkCollision(delta) {
+export function checkCollision(delta){
     if(isInvinsible){
         currentInvinsibleTime += delta;
         if(currentInvinsibleTime > invinsibleTime){
@@ -92,7 +92,7 @@ export function checkCollision(delta) {
 
 };
 
-export function checkObstacleCollision() {
+export function checkObstacleCollision(){
     for (const obs of obstacles) {
         if(isColliding(obs) && obs.isDeadly){
             return true;
@@ -101,7 +101,7 @@ export function checkObstacleCollision() {
     return false;
 };
 
-export function checkGasStationObstacleCollision() {
+export function checkGasStationObstacleCollision(){
     for(const obs of gasStationObstacles){
         if(obs.y === undefined || obs.y === null) continue;
         if(isColliding(obs)){
@@ -111,7 +111,7 @@ export function checkGasStationObstacleCollision() {
     return false;
 };
 
-export function checkNPCCarCollision() {
+export function checkNPCCarCollision(){
     for(const car of cars){
         if(isColliding(car)){
             return true;

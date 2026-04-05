@@ -3,7 +3,7 @@ import { gameLoop, initPlayer, resetPlayer } from "./character.js";
 import { resetHealth } from "./health.js";
 import { initRoadPos, initSheet , resetScene } from "./scene.js";
 import { scale } from "./spriteCoordinates.js";
-import { startPage, startPageLoop, activeCar, activeScenes, clearIsActiveButton, isActiveButton, isClickOnCar, isClickOnCloseButton, isClickOnSceneButton, isClickOnScene, stopStartPageLoop, isClickOnStartButton, pos, isClickOnColorButton } from "./startPage.js";
+import { startPage, startPageLoop, activeCar, isClickOnGuideButton ,activeScenes, clearIsActiveButton, isActiveButton, isClickOnCar, isClickOnCloseButton, isClickOnSceneButton, isClickOnScene, stopStartPageLoop, isClickOnStartButton, pos, isClickOnColorButton } from "./startPage.js";
 import { initPlayerIconSheet } from "./ui.js";
 
 export const canvas = document.getElementById("game-canvas");
@@ -232,9 +232,9 @@ document.addEventListener("click", (e) => {
         if (isClickOnColorButton(mousePos.x, mousePos.y)) {
             isActiveButton[0] = "cars";
         }
-        //if (isClickOnShopButton(mousePos.x, mousePos.y)) {
-        //    isActiveButton[0] = "shop";
-        //}
+        if (isClickOnGuideButton(mousePos.x, mousePos.y)) {
+            isActiveButton[0] = "guide";
+        }
         if (isClickOnCar(mousePos.x, mousePos.y)) {
             console.log(activeCar);
         }
