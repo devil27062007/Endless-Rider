@@ -1,16 +1,16 @@
 import { cars } from "./car.js";
-import { player , playerSprite } from "./character.js";
+import { player, playerSprite } from "./character.js";
 import { ctx } from "./main.js";
 import { gasStationObstacles, obstacles } from "./scene.js";
 
-const directionAngles = {
+const directionalAngles = {
     up: -Math.PI / 2,
     upRight: -Math.PI / 4,
     upLeft: -3 * Math.PI / 4,
 }
 
-export function getCarCorners(player, paddingX = 4, paddingY = 4){
-    const angle = directionAngles[player.currentFacing] ?? 0;
+export function getCarCorners(player, paddingX = 4, paddingY = 4) {
+    const angle = directionalAngles[player.currentFacing] ?? 0;
     const cos = Math.cos(angle);
     const sin = Math.sin(angle);
     const w = player.w / 2 - paddingX;
@@ -18,68 +18,87 @@ export function getCarCorners(player, paddingX = 4, paddingY = 4){
 
     const cx = player.x + player.w / 2;
     const cy = player.y + player.h / 2;
-}
 
-function rotatePoint(px, py, cx, cy, angleRad){
-    const cos = Math.cos(angleRad);
-    const sin = Math.sin(angleRad);
-    return {
-        x: cx + (px - cx) * cos - (py - cy) * sin,
-        y: cy + (px - cx) * sin + (py - cy) * cos,
-    };
-}
-
-function getPlayerpoints(){
-    const sprite = playerSprite[player.currentFacing];
-    const x = player.x;
-    const y = player.y;
-    const w = sprite.sw;
-    const h = sprite.sh;
-
-    //center of the sprite
-    const cx = x + w / 2;
-    const cy = y + h / 2;
-
-    //base "up" shape points
-    const basePoints = [
-        { x: x + w * 0, y: y},
-        { x: x + w * 0.9, y: y},
-        { x: x + w * 0.9, y: y + h},
-        { x: x + w * 0, y: y + h }
+    return [
+        { x: cx + (-w * cos - -h * sin), y: cy + (-w * sin - h * cos) },
+        { x: cx + (w * cos - -h * sin), y: cy + (w * sin + -h * cos) },
+        { x: cx + (w * cos - h * sin), y: cy + (w * sin + h * cos) },
+        { x: cx + (-w * cos - h * sin), y: cy + (-w * sin + h * cos) }
     ]
+};
 
-    let angle = 0;
-    if(player.currentFacing === "upRight") angle = 35 * (Math.PI / 180);
-    if(player.currentFacing === "upLeft") angle -= 35 * (Math.PI / 180);
+export function project(corners, axis) {
+    const dots = corners.map(c => c.x * axis.x + c.y * axis.y);
+    return { min: Math.min(...dots), max: Math.max(...dots) };
+};
 
-    return basePoints.map(p => rotatePoint(p.x, p.y, cx, cy, angle));
+export function getAxes(angle) {
+    return [
+        { x: Math.cos(angle), y: Math.sin(angle) },
+        { x: -Math.sin(angle), y: Math.cos(angle) }
+    ]
+};
+
+export function isColliding(car) {
+    const cornerA = getCarCorners(player);
+    const cornerB = getCarCorners(car);
+
+    const angleA = directionalAngles[player.currentFacing] ?? 0;
+    const angleB = directionalAngles[car.currentFacing] ?? 0;
+    const axes = [...getAxes(angleA), ...getAxes(angleB)];
+
+    for (const axis of axes) {
+        const a = project(cornerA, axis);
+        const b = project(cornerB, axis);
+
+        if (a.max < b.min || b.max < a.min) return false;
+    }
+
+    return true;
 }
 
-export function drawPlayerBox(){
-}
+
 //collision for obstacles and npc
-export function checkCollision(){
-    let check = checkObstacleCollision();
-    if(check){
+export function checkCollision() {
+    let check = checkNPCCarCollision();
+    if (check) {
         return true;
     }
-    check = checkNPCCarCollision();
-    if(check){
+    check = checkObstacleCollision();
+    if (check) {
+        return true;
+    }
+    check = checkGasStationObstacleCollision();
+    if (check) {
         return true;
     }
 
-}
+};
 
-export function checkObstacleCollision(){
-    for(let i = 0; i < obstacles.length; i++){
-        const obs = obstacles[i];
+export function checkObstacleCollision() {
+    for (const obs of obstacles) {
+        if(isColliding(obs) && obs.isDeadly){
+            return true;
+        }
     };
+    return false;
 };
 
-export function chechGasStationObstacleCollision(){
-
+export function checkGasStationObstacleCollision() {
+    for(const obs of gasStationObstacles){
+        if(obs.y === undefined || obs.y === null) continue;
+        if(isColliding){
+            return true;
+        }
+    }
+    return false;
 };
 
-export function checkNPCCarCollision(){
-
+export function checkNPCCarCollision() {
+    for(const car of cars){
+        if(isColliding(car)){
+            return true;
+        }
+    }
+    return false;
 };
