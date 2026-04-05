@@ -144,18 +144,18 @@ export function updatePlayer(delta){
 
     if(moveX > 0){
         //player.currentFacing ="upRight";
-        steeringAngle = Math.min(steeringAngle + steerSpeed * delta);
+        steeringAngle = Math.min(steeringAngle + steerSpeed * delta , maxSteer);
         lateralVelocity += lateralAccel * speedFactor * delta;
     }
     else if(moveX < 0){
-        player.currentFacing = "upLeft";
+        //player.currentFacing = "upLeft";
         steeringAngle = Math.max(steeringAngle - steerSpeed * delta, -maxSteer);
         lateralVelocity -= lateralAccel * speedFactor * delta;
     }
     else{
-        player.currentFacing = "up";
+        //player.currentFacing = "up";
         if(steeringAngle > 0) steeringAngle =Math.max(steeringAngle - steerReturn * delta, 0);
-        if(steeringAngle < 0) steeringAngle = Math.max(steeringAngle + steerReturn * delta, 0);
+        if(steeringAngle < 0) steeringAngle = Math.min(steeringAngle + steerReturn * delta, 0);
     }
     const road = getRoadBelowPlayer();
     const roadRight = posX + road.sw;
@@ -171,7 +171,7 @@ export function updatePlayer(delta){
         currentOffRoadTime = 0 ;
     }
 
-    if(moveX === 0 || (moveX < 0 && lateralVelocity > 0) || (moveX > 0 && lateralVelocity)){
+    if(moveX === 0 || (moveX < 0 && lateralVelocity > 0) || (moveX > 0 && lateralVelocity < 0)){
         if(lateralVelocity > 0) lateralVelocity = Math.max(0, lateralVelocity - lateralFriction * delta);
         if(lateralVelocity < 0) lateralVelocity = Math.min(0, lateralVelocity + lateralFriction * delta);
     }
@@ -250,10 +250,10 @@ export function gameLoop(currentTime) {
         console.log("collision occurs");
         deductHealth();
     }
-    if(isPlayerOnTopOfRefillBox){
+    if(isPlayerOnTopOfRefillBox()){
         player.fuel = 1;
     }
-    fuelStationMapForRefill()
+    fuelStationMapForRefill();
     
     animationId = requestAnimationFrame(gameLoop);
 };

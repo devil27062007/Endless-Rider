@@ -50,7 +50,7 @@ export function spawnCars(delta) {
 
             if(spriteNumber==="1" || spriteNumber === "3"){
                 lane += sprite.sw + 22;
-            } else {
+            }else{
                 lane +=sprite.sw + 28;
             }
         }else {
@@ -74,8 +74,8 @@ export function spawnCars(delta) {
             facing: currentFacing,
             w: sprite.sw,
             h: sprite.sh
-        })
-    }
+        });
+    };
 };
 
 export function updateCars(delta){
@@ -85,7 +85,7 @@ export function updateCars(delta){
         } else {
             cars[i].y += (player.speed + 350) * delta;
         }
-    }
+    };
 
     cars = cars.filter(car => car.y < canvas.height / window.devicePixelRatio + 1000);
 
@@ -100,4 +100,4 @@ export function drawCars(){
             car.x, car.y, car.sprite.sw, car.sprite.sh
         );
     }
-}
+};

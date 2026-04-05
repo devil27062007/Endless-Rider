@@ -13,7 +13,7 @@ export const invinsibleTime = 3;
 export let currentInvinsibleTime = 0;
 export let isInvinsible = false;
 
-export function getCarCorners(entity , paddingX = 4, paddingY = 4) {
+export function getCarCorners(entity , paddingX = 4, paddingY = 4){
     const angle = entity === player ? steeringAngle : directionalAngles[player.currentFacing] ?? 0;
     const cos = Math.cos(angle);
     const sin = Math.sin(angle);
@@ -24,22 +24,22 @@ export function getCarCorners(entity , paddingX = 4, paddingY = 4) {
     const cy = entity.y + entity.h / 2;
 
     return [
-        { x: cx + (-w * cos - -h * sin), y: cy + (-w * sin + - h * cos) },
-        { x: cx + (w * cos - -h * sin), y: cy + (w * sin + -h * cos) },
-        { x: cx + (w * cos - h * sin), y: cy + (w * sin + h * cos) },
-        { x: cx + (-w * cos - h * sin), y: cy + (-w * sin + h * cos) }
+        { x: cx + (-w * cos - -h * sin), y: cy + (-w * sin + - h * cos)},
+        { x: cx + (w * cos - -h * sin), y: cy + (w * sin + -h * cos)},
+        { x: cx + (w * cos - h * sin), y: cy + (w * sin + h * cos)},
+        { x: cx + (-w * cos - h * sin), y: cy + (-w * sin + h * cos)}
     ]
 };
 
-export function project(corners, axis) {
+export function project(corners, axis){
     const dots = corners.map(c => c.x * axis.x + c.y * axis.y);
     return { min: Math.min(...dots), max: Math.max(...dots) };
 };
 
 export function getAxes(angle){
     return [
-        { x: Math.cos(angle), y: Math.sin(angle) },
-        { x: -Math.sin(angle), y: Math.cos(angle) }
+        { x: Math.cos(angle), y: Math.sin(angle)},
+        { x: -Math.sin(angle), y: Math.cos(angle)}
     ]
 };
 
