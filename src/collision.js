@@ -2,6 +2,7 @@ import { cars } from "./car.js";
 import { player, playerSprite, steeringAngle } from "./character.js";
 import { ctx } from "./main.js";
 import { gasStationObstacles, obstacles } from "./scene.js";
+import { playCollisionSound } from "./sound.js";
 
 const directionalAngles = {
     up: -Math.PI / 2,
@@ -74,16 +75,19 @@ export function checkCollision(delta){
     }
     let check = checkNPCCarCollision();
     if (check) {
+        playCollisionSound();
         isInvinsible = true;
         return true;
     }
     check = checkObstacleCollision();
     if (check) {
+        playCollisionSound();
         isInvinsible = true;
         return true;
     }
     check = checkGasStationObstacleCollision();
     if (check) {
+        playCollisionSound();
         isInvinsible = true;
         return true;
     }

@@ -1,14 +1,15 @@
-import { drawCars , spawnCars , updateCars } from "./car.js" ;
-import { checkCollision , currentInvinsibleTime, isInvinsible } from "./collision.js";
+import { drawCars, spawnCars, updateCars } from "./car.js";
+import { checkCollision, currentInvinsibleTime, isInvinsible } from "./collision.js";
 import { deductHealth } from "./health.js";
-import { canvas, ctx, isDead, resetAll, resetIsDead, resetIsGameRunning, setIsDead, keys, playerSpriteSheet1 , playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4} from "./main.js" ;
-import { drawObstacles,fuelStationMapForRefill,isPlayerOnTopOfRefillBox, spawnObstacles , updateObstacles , drawScene,getRoadBelowPlayer,randomSceneGeneration, posX, roads, updateRoad , updateDetails } from "./scene.js" ;
-import { player1Sprite, player2Sprite, player3Sprite, player4Sprite, summer } from "./spriteCoordinates.js" ;
+import { canvas, ctx, isDead, resetAll, resetIsDead, resetIsGameRunning, setIsDead, keys, playerSpriteSheet1, playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4 } from "./main.js";
+import { drawObstacles, fuelStationMapForRefill, isPlayerOnTopOfRefillBox, spawnObstacles, updateObstacles, drawScene, getRoadBelowPlayer, randomSceneGeneration, posX, roads, updateRoad, updateDetails } from "./scene.js";
+import { updateEngineSound } from "./sound.js";
+import { player1Sprite, player2Sprite, player3Sprite, player4Sprite, summer } from "./spriteCoordinates.js";
 import { startPageLoop } from "./startPage.js";
-import { drawFullUI , drawIsDeadTitle} from "./ui.js";
+import { drawFullUI, drawIsDeadTitle } from "./ui.js";
 
-export let defaultPlayerSheet ;
-export let playerSprite ;
+export let defaultPlayerSheet;
+export let playerSprite;
 export let fuelDropTime = 1;
 export let fuelCurrentTime = 0;
 
@@ -43,11 +44,11 @@ export const player = {
 };
 
 export const pseudoPos = {
-    x : 0,
+    x: 0,
     y: 0,
 };
 
-export function initPlayer(){
+export function initPlayer() {
     defaultPlayerSheet = playerSpriteSheet1;
     playerSprite = player1Sprite;
 
@@ -56,15 +57,15 @@ export function initPlayer(){
     playerSheet = [playerSpriteSheet1, playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4];
 };
 
-export const playerKey = [player1Sprite ,player2Sprite, player3Sprite, player4Sprite];
+export const playerKey = [player1Sprite, player2Sprite, player3Sprite, player4Sprite];
 export let playerSheet = [];
 
-export function changeDefaultPlayer(key){
+export function changeDefaultPlayer(key) {
     playerSprite = playerKey[key];
     defaultPlayerSheet = playerSheet[key];
 };
 
-export function resetPlayer(){
+export function resetPlayer() {
     player.speed = 100;
     player.fuel = 1;
     player.x = canvas.width / window.devicePixelRatio / 2 - (summer["road"].sw) / 2 + playerSprite["up"].sw + 22;
@@ -74,13 +75,13 @@ export function resetPlayer(){
 
 let lastTime = 0;
 export let angle = 0;
-let animationId = null ;
+let animationId = null;
 
-export function updatePlayer(delta){
-    if ( isDead ) return;
-    let moveX = 0 ;
-    let moveY = 0 ;
-    if(player.fuel <= 0){
+export function updatePlayer(delta) {
+    if (isDead) return;
+    let moveX = 0;
+    let moveY = 0;
+    if (player.fuel <= 0) {
         setIsDead();
         return;
     }
@@ -88,111 +89,113 @@ export function updatePlayer(delta){
     let activeMaxSpeed = keys.shift && player.nitro > 0 ? player.maxSpeed + 75 : player.maxSpeed;
 
     fuelCurrentTime += delta;
-    if(fuelCurrentTime >= fuelDropTime) {
-        fuelCurrentTime -= fuelDropTime ;
-        if(player.speed > player.idleSpeed) player.fuel -= 0.03 ;
-        else if(player.speed === player.idleSpeed) player.fuel -= 0.02 ;
-        else player.fuel -= 0.01 ;
+    if (fuelCurrentTime >= fuelDropTime) {
+        fuelCurrentTime -= fuelDropTime;
+        if (player.speed > player.idleSpeed) player.fuel -= 0.03;
+        else if (player.speed === player.idleSpeed) player.fuel -= 0.02;
+        else player.fuel -= 0.01;
     }
 
-    if(keys.up) {
+    if (keys.down) {
+        player.speed -= delta * 200;
+        if (player.speed < player.minSpeed) player.speed = player.minSpeed;
+    }
+    else if (keys.up){
 
         if(keys.shift && player.nitro > 0){
             player.nitro -= delta * 50;
 
-            if(player.nitro < 0) player.nitro = 0 ;
+            if(player.nitro < 0) player.nitro = 0;
         }
 
-        if(player.speed < activeMaxSpeed) {
-            let acceleration = keys.shift ? 200 : 100 ;
+        if (player.speed < activeMaxSpeed) {
+            let acceleration = keys.shift ? 200 : 100;
             player.speed += delta * acceleration;
 
             if (player.speed > activeMaxSpeed) player.speed = activeMaxSpeed;
         }
-        else if(player.speed > activeMaxSpeed){
+        else if (player.speed > activeMaxSpeed) {
             player.speed -= delta * 100;
-            if(player.speed < activeMaxSpeed) player.speed = activeMaxSpeed ;
+            if (player.speed < activeMaxSpeed) player.speed = activeMaxSpeed;
         }
     }
-    else if(keys.down){
-        player.speed -= delta * 200;
-        if(player.speed < player.minSpeed) player.speed = player.minSpeed;
-    }
-    else{
-        if(player.speed > player.idleSpeed){
+    else {
+        if (player.speed > player.idleSpeed) {
             player.speed -= delta * 100;
-            if(player.speed < player.idleSpeed ) player.speed = player.idleSpeed;
+            if (player.speed < player.idleSpeed) player.speed = player.idleSpeed;
         }
-        else if(player.speed < player.idleSpeed){
+        else if (player.speed < player.idleSpeed) {
             player.speed += delta * 100;
-            if(player.speed > player.idleSpeed ) player.speed = player.idleSpeed;
+            if (player.speed > player.idleSpeed) player.speed = player.idleSpeed;
         }
     };
 
-    if(keys.up) moveY -= 1;
-    if(keys.down) moveY +=1 ;
-    if(keys.left) moveX -= 1;
-    if(keys.right) moveX += 1;
+    if (keys.up) moveY -= 1;
+    if (keys.down) moveY += 1;
+    if (keys.left) moveX -= 1;
+    if (keys.right) moveX += 1;
 
-    const len = Math.sqrt(moveX * moveX + moveY* moveY);
-    if(len > 0){
+    const len = Math.sqrt(moveX * moveX + moveY * moveY);
+    if (len > 0) {
         moveX /= len;
         moveY /= len;
     }
 
     const speedFactor = 0.5 + (player.speed / player.maxSpeed) * 0.5;
 
-    if(moveX > 0){
+    if (moveX > 0) {
         //player.currentFacing ="upRight";
-        steeringAngle = Math.min(steeringAngle + steerSpeed * delta , maxSteer);
+        steeringAngle = Math.min(steeringAngle + steerSpeed * delta, maxSteer);
         lateralVelocity += lateralAccel * speedFactor * delta;
     }
-    else if(moveX < 0){
+    else if (moveX < 0) {
         //player.currentFacing = "upLeft";
         steeringAngle = Math.max(steeringAngle - steerSpeed * delta, -maxSteer);
         lateralVelocity -= lateralAccel * speedFactor * delta;
     }
-    else{
+    else {
         //player.currentFacing = "up";
-        if(steeringAngle > 0) steeringAngle =Math.max(steeringAngle - steerReturn * delta, 0);
-        if(steeringAngle < 0) steeringAngle = Math.min(steeringAngle + steerReturn * delta, 0);
+        if (steeringAngle > 0) steeringAngle = Math.max(steeringAngle - steerReturn * delta, 0);
+        if (steeringAngle < 0) steeringAngle = Math.min(steeringAngle + steerReturn * delta, 0);
     }
     const road = getRoadBelowPlayer();
     const roadRight = posX + road.sw;
 
-    if(player.x <= posX || player.x + playerSprite[player.currentFacing].sw >= roadRight){
+    if (player.x <= posX || player.x + playerSprite[player.currentFacing].sw >= roadRight) {
         currentOffRoadTime += delta;
-        if( currentOffRoadTime >= maxOffRoadTime ){
+        if (currentOffRoadTime >= maxOffRoadTime) {
             currentOffRoadTime -= maxOffRoadTime;
             deductHealth();
         }
         player.fuel -= 0.01 * delta;
     } else {
-        currentOffRoadTime = 0 ;
+        currentOffRoadTime = 0;
     }
 
-    if(moveX === 0 || (moveX < 0 && lateralVelocity > 0) || (moveX > 0 && lateralVelocity < 0)){
-        if(lateralVelocity > 0) lateralVelocity = Math.max(0, lateralVelocity - lateralFriction * delta);
-        if(lateralVelocity < 0) lateralVelocity = Math.min(0, lateralVelocity + lateralFriction * delta);
+    if (moveX === 0 || (moveX < 0 && lateralVelocity > 0) || (moveX > 0 && lateralVelocity < 0)) {
+        if (lateralVelocity > 0) lateralVelocity = Math.max(0, lateralVelocity - lateralFriction * delta);
+        if (lateralVelocity < 0) lateralVelocity = Math.min(0, lateralVelocity + lateralFriction * delta);
     }
 
-    lateralVelocity = Math.max(-lateralMaxSpeed, Math.min(lateralMaxSpeed,lateralVelocity));
+    lateralVelocity = Math.max(-lateralMaxSpeed, Math.min(lateralMaxSpeed, lateralVelocity));
 
     player.x += lateralVelocity * delta;
+
+    updateEngineSound();
 };
 
 export function drawPlayer() {
-    if(isInvinsible){
+    if (isInvinsible) {
         const blinkInterval = 0.1;
         const shouldHide = Math.floor(currentInvinsibleTime / blinkInterval) % 2 === 0;
-        if(shouldHide) return;
+        if (shouldHide) return;
     }
     ctx.imageSmoothingEnabled = false;
 
     const pos = playerSprite[player.currentFacing];
     const cx = player.x + pos.sw / 2;
     const cy = player.y + pos.sh / 2;
-    
+
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(steeringAngle);
@@ -213,7 +216,7 @@ export function gameLoop(currentTime) {
     if (delta > 0.1) delta = 0.1;
 
     lastTime = currentTime;
-    
+
     spawnCars(delta);
     spawnObstacles(delta);
 
@@ -224,15 +227,15 @@ export function gameLoop(currentTime) {
     updateObstacles(delta);
 
     randomSceneGeneration(delta);
-    
+
     drawScene();
     drawFullUI(delta);
     drawObstacles();
     drawCars();
-    
-    if(isDead){
+
+    if (isDead) {
         currentIsDeadTimer += delta;
-        if(currentIsDeadTimer > isDeadTimer){
+        if (currentIsDeadTimer > isDeadTimer) {
             stopGameLoop();
             resetIsDead();
             resetAll();
@@ -246,20 +249,20 @@ export function gameLoop(currentTime) {
     }
 
     const check = checkCollision(delta);
-    if(check && !isDead){
+    if (check && !isDead) {
         console.log("collision occurs");
         deductHealth();
     }
-    if(isPlayerOnTopOfRefillBox()){
+    if (isPlayerOnTopOfRefillBox()) {
         player.fuel = 1;
     }
     fuelStationMapForRefill();
-    
+
     animationId = requestAnimationFrame(gameLoop);
 };
 
-export function stopGameLoop(){
+export function stopGameLoop() {
     cancelAnimationFrame(animationId);
-    animationId = null ;
+    animationId = null;
     lastTime = 0;
 };

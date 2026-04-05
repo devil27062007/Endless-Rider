@@ -1,4 +1,6 @@
 import { setIsDead } from "./main.js"; 
+import { playGameOverSound , stopEngine } from "./sound.js";
+
 export let health = [1, 1, 1];
 
 export function deductHealth() {
@@ -7,7 +9,8 @@ export function deductHealth() {
         health[lastIndexOfOne] = 0;
     }
     if (checkLife() === -1) {
-        console.log("player is dead");
+        stopEngine();
+        playGameOverSound();
         setIsDead();
     }
 } ;
