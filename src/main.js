@@ -3,8 +3,8 @@ import { gameLoop, initPlayer, resetPlayer } from "./character.js";
 import { resetHealth } from "./health.js";
 import { initRoadPos, initSheet , resetScene } from "./scene.js";
 import { scale } from "./spriteCoordinates.js";
-import { startPage, startPageLoop, activeCar, activeScenes, clearIsActiveButton, isActiveButton, isClickOnCar, isClickOncloseButton, isClickOnSceneButton, isClickOnScene, stopStartPageLoop, isClickOnStartButton, pos, isClickOnColorButton } from "./startPage.js";
-import { initPlayerIconSheet, } from "./ui.js";
+import { startPage, startPageLoop, activeCar, activeScenes, clearIsActiveButton, isActiveButton, isClickOnCar, isClickOnCloseButton, isClickOnSceneButton, isClickOnScene, stopStartPageLoop, isClickOnStartButton, pos, isClickOnColorButton } from "./startPage.js";
+import { initPlayerIconSheet } from "./ui.js";
 
 export const canvas = document.getElementById("game-canvas");
 export const ctx = canvas.getContext("2d");
@@ -45,7 +45,7 @@ summerDetails3SpriteSheet.src = "assets/Levels/Summer_details3.png";
 export const summerDetails4SpriteSheet = new Image();
 summerDetails4SpriteSheet.src = "assets/Levels/Summer_details4.png";
 
-export const winterRoadSpriteSheet = new Image;
+export const winterRoadSpriteSheet = new Image();
 winterRoadSpriteSheet.src = "assets/Levels/Winter_road.png";
 
 export const winterGasStationSpriteSheet = new Image();
@@ -69,11 +69,11 @@ damageSpriteSheet.src = "assets/UI/Damage_indicator.png";
 export const fuelBarSpriteSheet = new Image();
 fuelBarSpriteSheet.src = "assets/UI/Fuel_bar.png";
 
-export const playerIndicatoreSpriteSheet = new Image();
-playerIndicatoreSpriteSheet.src = "assets/UI/Player_arrow_indicator.png";
+export const playerIndicatorSpriteSheet = new Image();
+playerIndicatorSpriteSheet.src = "assets/UI/Player_arrow_indicator.png";
 
-export const numberSpriteSheet = new Image();
-numberSpriteSheet.src = "assets/UI/Speed_indicator_numbers.png";
+export const numbersSpriteSheet = new Image();
+numbersSpriteSheet.src = "assets/UI/Speed_indicator_numbers.png";
 
 export const carrotSpriteSheet = new Image();
 carrotSpriteSheet.src = "assets/Player_sprite_icons/Carrot.png";
@@ -117,7 +117,7 @@ function resizeCanvas() {
     canvas.height = window.innerHeight * dpr;
 
     ctx.scale(dpr, dpr);
-    ctx.imageSmoothhingEnabled = false;
+    ctx.imageSmoothingEnabled = false;
 };
 
 export function randomInt(min, max) {
@@ -138,7 +138,7 @@ function onImageLoad() {
         //requestAnimationFrame(gameLoop);
         //startPage()
 
-        requestAnimationFrame(gameLoop);
+        requestAnimationFrame(startPageLoop);
     }
 };
 
@@ -155,7 +155,7 @@ export function getCurrentMousePos(e) {
 
     return {
         x: cssX * scaleX,
-        y: cssY * scaleY,
+        y: cssY * scaleY
     }
 
 };
@@ -241,7 +241,7 @@ document.addEventListener("click", (e) => {
         if (isClickOnScene(mousePos.x, mousePos.y)) {
             console.log(activeScenes);
         }
-        if (isClickOncloseButton(mousePos.x, mousePos.y)) {
+        if (isClickOnCloseButton(mousePos.x, mousePos.y)) {
             clearIsActiveButton();
         }
     }
@@ -274,9 +274,9 @@ desertGasStationSpriteSheet.onload = onImageLoad;
 npcSpriteSheet.onload = onImageLoad;
 damageSpriteSheet.onload = onImageLoad;
 fuelBarSpriteSheet.onload = onImageLoad;
-playerIndicatoreSpriteSheet.onload = onImageLoad;
+playerIndicatorSpriteSheet.onload = onImageLoad;
 fullSpriteSheet.onload = onImageLoad;
-numberSpriteSheet.onload = onImageLoad;
+numbersSpriteSheet.onload = onImageLoad;
 carrotSpriteSheet.onload = onImageLoad;
 lemonSpriteSheet.onload = onImageLoad;
 slimeSpriteSheet.onload = onImageLoad;

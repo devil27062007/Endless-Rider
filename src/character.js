@@ -42,7 +42,7 @@ export function initPlayer() {
 
     player.x = canvas.width / window.devicePixelRatio / 2 - (summer["road"].sw) / 2 + playerSprite["up"].sw + 22;
     player.y = canvas.height / window.devicePixelRatio / 2 + 100;
-    const playerSheet = [playerSpriteSheet1, playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4];
+    playerSheet = [playerSpriteSheet1, playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4];
 };
 
 export const playerKey = [player1Sprite ,player2Sprite, player3Sprite, player4Sprite];
@@ -75,7 +75,7 @@ export function updatePlayer(delta) {
     if(fuelCurrentTime >= fuelDropTime) {
         fuelCurrentTime -= fuelDropTime ;
         if(player.speed > player.idleSpeed) player.fuel -= 0.03 ;
-        else if(player.speed === player.idleSpeed) player.fuel -= 0.2 ;
+        else if(player.speed === player.idleSpeed) player.fuel -= 0.02 ;
         else player.fuel -= 0.01 ;
     }
 
@@ -88,7 +88,7 @@ export function updatePlayer(delta) {
         }
 
         if(player.speed < activeMaxSpeed) {
-            let acceleration = keys.shift ? 200 : 300 ;
+            let acceleration = keys.shift ? 200 : 100 ;
             player.speed += delta * acceleration;
 
             if (player.speed > activeMaxSpeed) player.speed = activeMaxSpeed;
@@ -99,8 +99,8 @@ export function updatePlayer(delta) {
         }
     }
     else if(keys.down){
-        player.speed -= delta * 200 - 0.5;
-        if(player.speed < player.minSpeed) player.speed = player.idleSpeed;
+        player.speed -= delta * 200;
+        if(player.speed < player.minSpeed) player.speed = player.minSpeed;
     }
     else{
         if(player.speed > player.idleSpeed){
@@ -175,7 +175,7 @@ export function gameLoop(currentTime) {
     spawnObstacles(delta);
 
     updatePlayer(delta);
-    updatePlayer(delta);
+    updateRoad(delta);
     updateCars(delta);
     updateDetails(delta);
     updateObstacles(delta);

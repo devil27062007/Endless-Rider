@@ -3,7 +3,7 @@
 import { drawCars, spawnCars, updateCars } from "./car.js";
 import { changeDefaultPlayer } from "./character.js";
 import { buttonsSpriteSheet, canvas, ctx, desertRoadSpriteSheet, npcSpriteSheet, playerSpriteSheet1, playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4, summerRoadSpriteSheet, winterRoadSpriteSheet } from "./main.js";
-import { addScene, posX, posY, randomSceneGeneration, removeScene, scene, drawObstacles, drawScene, spawnObstacles, updateDetails, updateRoad, sceneSpriteSheetMap } from "./scene.js";
+import { addScene, posX, posY, randomSceneGeneration, removeScene, scene, drawObstacles, drawScene, spawnObstacles, updateDetails, updateRoad,updateObstacles} from "./scene.js";
 import { closeButtonSprite, desert, npc1Sprite, npc2Sprite, npc3Sprite, player1Sprite, player2Sprite, player3Sprite, player4Sprite, scale, selectedButtonSprite, startPageUI, summer, winter } from "./spriteCoordinates.js";
 
 let animationId = null;
@@ -15,7 +15,7 @@ export let carPos = {};
 export let activeCar = "player1Sprite";
 export let isActiveButton = [];
 export let activeScenes = ["summer"];
-export let scenePos = {};
+export let scenesPos = {};
 
 export function startPage() {
     animationId = requestAnimationFrame(startPageLoop);
@@ -44,7 +44,7 @@ export function startPageLoop(currentTime) {
     drawCars();
 
     drawButtons();
-    drawPageForActiveButtons();
+    drawPageForActiveButton();
 
     animationId = requestAnimationFrame(startPageLoop);
 };
@@ -81,54 +81,46 @@ export function drawButtons() {
 };
 
 export function isClickOnStartButton(x, y) {
-    const startPos = pos["start"];
-    if (!startPos) return false;
     return (
-        x >= startPos.x &&
-        x <= startPos.x + startPos.w &&
-        y >= startPos.y &&
-        y <= startPos.y + startPos.h
+        x >= pos["start"].x &&
+        x <= pos["start"].x + pos["start"].w &&
+        y >= pos["start"].y &&
+        y <= pos["start"].y + pos["start"].h
     );
 }
 
 export function isClickOnSceneButton(x, y) {
-    const sceneButtonPos = pos["scene"];
-    if (!sceneButtonPos) return false;
     return (
-        x >= sceneButtonPos.x &&
-        x <= sceneButtonPos.x + sceneButtonPos.w &&
-        y >= sceneButtonPos.y &&
-        y <= sceneButtonPos.y + sceneButtonPos.h
+        x >= pos["scene"].x &&
+        x <= pos["scene"].x + pos["scene"].w &&
+        y >= pos["scene"].y &&
+        y <= pos["scene"].y + pos["scene"].h
     )
 };
 
 export function isClickOnColorButton(x, y) {
-    const carsPos = pos["cars"];
-    if (!carsPos) return false;
     return (
-        x >= carsPos.x &&
-        x <= carsPos.x + carsPos.w &&
-        y >= carsPos.y &&
-        y <= carsPos.y + carsPos.h
+        x >= pos["cars"].x &&
+        x <= pos["cars"].x + pos["cars"].w &&
+        y >= pos["cars"].y &&
+        y <= pos["cars"].y + pos["cars"].h
     )
 };
 
-export function isClickOnShopButton(x, y) {
-    const shopPos = pos["shop"];
-    if (!shopPos) return false;
-    return (
-        x >= shopPos.x &&
-        x <= shopPos.x + shopPos.w &&
-        y >= shopPos.y &&
-        y <= shopPos.y + shopPos.h
-    );
-};
+//export function isClickOnShopButton(x, y) {
+//    return (
+//        x >= pos["shop"].x &&
+//        x <= pos["shop"].x + pos["shop"].w &&
+//        y >= pos["shop"].y &&
+//        y <= pos["shop"].y + pos["shop"].h
+//    );
+//};
 
 export function clearIsActiveButton() {
     isActiveButton[0] = null;
 };
 
-export function drawPageForActiveButtons() {
+export function drawPageForActiveButton() {
     if (isActiveButton.length === 0 || isActiveButton[0] === "" || isActiveButton[0] === null) return;
 
     let bgWidth = Math.round(scale * 130);
@@ -139,7 +131,7 @@ export function drawPageForActiveButtons() {
 
     drawBackGround(x, y, bgWidth, bgHeight);
     drawCloseButton(x + bgWidth - scale * 2, y + scale * 2);
-    drawStationObstacles(x + bgWidth / 2, y + scale * 2);
+    drawTitle(x + bgWidth / 2, y + scale * 2);
     showPlayerColorOption(x, y, bgWidth, bgHeight);
     drawSceneOnStartPage(x, y);
 };
@@ -244,10 +236,10 @@ export function isClickOnCar(x, y) {
             return true;
         }
     }
-    return true;
+    return false;
 };
 
-export function isClickOncloseButton(x, y) {
+export function isClickOnCloseButton(x, y) {
     if (!closePos[0]) return false;
     return (
         x >= closePos[0].x &&
@@ -263,7 +255,7 @@ export function drawSceneOnStartPage(x, y) {
     let currentX = x + scale * 5;
     let currentY = y + scale * 25;
 
-    let scenePos = [summer["road"], winter["road"], desert["road"]];
+    let scenes = [summer["road"], winter["road"], desert["road"]];
     let sheets = [summerRoadSpriteSheet, winterRoadSpriteSheet, desertRoadSpriteSheet];
     let keys = ["summer", "winter", "desert"];
 
@@ -288,7 +280,7 @@ export function drawSceneOnStartPage(x, y) {
             }
         };
 
-        scenePos[key] = {
+        scenesPos[key] = {
             x: currentX,
             y: currentY,
             w: sprite.sw * 0.4,
@@ -300,9 +292,9 @@ export function drawSceneOnStartPage(x, y) {
 };
 
 export function isClickOnScene(x, y) {
-    const keys = Object.keys(scenePos);
+    const keys = Object.keys(scenesPos);
     for (let i = 0; i < keys.length; i++) {
-        const pos = scenePos[keys[i]];
+        const pos = scenesPos[keys[i]];
         if (x >= pos.x &&
             x <= pos.x + pos.w &&
             y >= pos.y &&

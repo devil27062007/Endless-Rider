@@ -1,5 +1,5 @@
 import { setIsDead } from "./main.js"; 
-export let health = [1, 1, 0] ;
+export let health = [1, 1, 1] ;
 
 export function deductHealth() {
     const lastIndexOfOne = health.lastIndexOf(1) ;

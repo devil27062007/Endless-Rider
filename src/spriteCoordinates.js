@@ -19,7 +19,7 @@ export const player2Sprite = {
 
 export const player3Sprite = {
     up: { x: 4, y: 2, w: 9, h: 13, sw: 9 * scale, sh: 13 * scale},
-    upRight: { x: 18, y: 2, W: 14, h: 14, sw: 14 * scale, sh: 14 * scale},
+    upRight: { x: 18, y: 2, w: 14, h: 14, sw: 14 * scale, sh: 14 * scale},
     upLeft: { x: 113, y: 2, w: 14, h: 14, sw: 14 * scale, sh: 14 * scale}
 };
 
@@ -45,7 +45,7 @@ export const npc3Sprite = {
 }
 
 export const npc4Sprite = {
-    "up": { x: 5, y: 52, w: 7, h: 11, sw: 7 * scale, sh: 11 * scale },
+    "up": { x: 5, y: 51, w: 7, h: 11, sw: 7 * scale, sh: 11 * scale },
     "down": { x: 37, y: 51, w: 7, h: 11, sw: 7 * scale, sh: 11 * scale }
 }
 
@@ -79,7 +79,7 @@ export const ui = {
     damageYes: { x: 0, y: 0, w: 8, h: 8, sw: 8 * scale, sh: 8 * scale },
     damageNo: { x: 8, y: 0, w: 8, h: 8, sw: 8 * scale, sh: 8 * scale },
     fuelBar: { x: 6, y: 4, w: 4, h: 48, sw: 4 * scale, sh: 48 * scale },
-    playerIndicator: { x: 0, y: 0, w: 80, h: 8, sw: 8 * scale, sh: 9 * scale },
+    playerIndicator: { x: 0, y: -1, w: 8, h: 8, sw: 8 * scale, sh: 9 * scale },
     numbers: { x: 0, y: 0, w: 80, h: 8, sw: 80 * scale, sh: 8 * scale },
 }
 
@@ -107,7 +107,7 @@ export const playerIcons = {
 }
 
 export const numbers = {
-    "0": { x: 0, y: 0, w: 8, h: 8, sw: 8 * (scale + 1), sh: 8 * (scale + 1) },
+    "0": { x: 0, y: 0, w: 8, h: 8, sw: 8 * (scale + 1), sh: 8 * (scale + 2) },
     "1": { x: 9, y: 0, w: 5, h: 8, sw: 5 * (scale + 1), sh: 8 * (scale + 1) },
     "2": { x: 17, y: 0, w: 7, h: 8, sw: 7 * (scale + 1), sh: 8 * (scale + 1) },
     "3": { x: 25, y: 0, w: 7, h: 8, sw: 7 * (scale + 1), sh: 8 * (scale + 1) },
@@ -126,7 +126,7 @@ export const damageSprite = {
 
 export const roadObstackleSprites = {
     "arrow": { x: 5, y: 0, w: 6, h: 16, sw: 6 * scale, sh: 6 * scale },
-    "crack": { x: 21, y: 5, W: 7, h: 6, sw: 7 * scale, sh: 6 * scale },
+    "crack": { x: 21, y: 5, w: 7, h: 6, sw: 7 * scale, sh: 6 * scale },
     "oilSpill": { x: 37, y: 5, w: 6, h: 6, sw: 6 * scale, sh: 6 * scale },
     "potHole": { x: 52, y: 4, w: 8, h: 8, sw: 8 * scale, sh: 8 * scale },
     "cone": { x: 69, y: 5, w: 6, h: 7, sw: 6 * scale, sh: 7 * scale },
@@ -136,7 +136,7 @@ export const roadObstackleSprites = {
 
 export const stationMarking =  {
     "arrowRight": { x: 7, y: 4, w: 6, h: 9, sw: 6 * scale, sh: 9 * scale },
-    "pump": { x: 21, y: 3, w: 9, h: 10, sw: 9 * scale, sh: 14 * scale },
+    "pump": { x: 21, y: 3, w: 9, h: 10, sw: 9 * scale, sh: 10 * scale },
     "60": { x: 33, y: 1, w: 14, h: 14, sw: 14 * scale, sh: 14 * scale },
     "30": { x: 49, y: 1, w: 14, h: 14, sw: 14 * scale, sh: 14 * scale }
 }

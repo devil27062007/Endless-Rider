@@ -1,6 +1,6 @@
 import { player, playerSprite } from "./character.js";
 import { health } from "./health.js";
-import { canvas, gameOverSpriteSheet, isDead, carrotSpriteSheet, numberSpriteSheet, cherrySpriteSheet, ctx, fullSpriteSheet, lemonSpriteSheet, playerIndicatoreSpriteSheet, randomInt,slimeSpriteSheet, fuelBarSpriteSheet, damageSpriteSheet } from "./main.js";
+import { canvas, gameOverSpriteSheet, isDead, carrotSpriteSheet, numbersSpriteSheet, cherrySpriteSheet, ctx, fullSpriteSheet, lemonSpriteSheet, playerIndicatorSpriteSheet, randomInt,slimeSpriteSheet, fuelBarSpriteSheet, damageSpriteSheet } from "./main.js";
 import { ui,gameOverSprite, playerIcons ,numbers, scale, damageSprite } from "./spriteCoordinates.js";
 
 export let currentPlayerIcon = "lemon" ;
@@ -20,7 +20,7 @@ export function initPlayerIconSheet(){
         "lemon": lemonSpriteSheet,
         "cherry": cherrySpriteSheet,
         "slime": slimeSpriteSheet,
-        "carrot": carrotSpriteSheet,
+        "carrot": carrotSpriteSheet
     };
 }
 
@@ -49,7 +49,7 @@ export function mainUI(){
 export function drawPlayerIndicator(){
     const sprite = ui["playerIndicator"];
     ctx.drawImage(
-        playerIndicatoreSpriteSheet,
+        playerIndicatorSpriteSheet,
         sprite.x, sprite.y, sprite.w, sprite.h,
         player.x + (playerSprite[player.currentFacing].sw / 2) - (sprite.sw / 2) - scale * 0.3, player.y - scale * 11, sprite.sw, sprite.sh
     );
@@ -85,14 +85,14 @@ export function drawSpeed(){
     }
 
     ctx.fillStyle = "#141414";
-    ctx.fillRect( uiX, height - scale, ui["full"].sw / 2, numbers["0"].sh + 3.5);
+    ctx.fillRect( uiX, height - scale, ui["full"].sw , numbers["0"].sh + scale * 3.5);
 
     let currentX = uiX + (ui["full"].sw / 2) - (totalW) / 2;
 
     for(let i = 0; i < speedInString.length ; i++){
         const sprite = numbers[speedInString[i]];
         ctx.drawImage(
-            numberSpriteSheet,
+            numbersSpriteSheet,
             sprite.x, sprite.y, sprite.w, sprite.h,
             currentX, height, sprite.sw, sprite.sh
         );

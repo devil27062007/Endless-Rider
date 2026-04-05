@@ -6,7 +6,7 @@ export function gameOverPage(currentTime) {
     let delta = (currentTime - lastTime) / 1000;
     if(delta > 0.1)  delta = 0.1;
     drawGameOverScene();
-    animationId = requestAnimationFrame(gameOverPage());
+    animationId = requestAnimationFrame(gameOverPage);
 };
 
 export function stopGameOverPage() {

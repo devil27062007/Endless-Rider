@@ -312,7 +312,7 @@ export function spawnGasStationObstacles() {
         currentFacing: "up"
     })
 };
-                         
+
 export function spawnObstacles(delta) {
     currentSpawnObstacleTime += delta;
     if (currentSpawnObstacleTime >= spawnObstacleTime) {
@@ -346,6 +346,7 @@ export function spawnObstacles(delta) {
             h: roadObstackleSprites[spriteKey].sh,
             currentFacing: "up",
         });
+        console.log(obstacles)
     }
 };
 

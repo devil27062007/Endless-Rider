@@ -6,8 +6,8 @@ import { gasStationObstacles, obstacles } from "./scene.js";
 const directionalAngles = {
     up: -Math.PI / 2,
     upRight: -Math.PI / 4,
-    upLeft: -3 * Math.PI / 4,
-}
+    upLeft: -3 * Math.PI / 4
+};
 
 export const invinsibleTime = 3;
 export let currentInvinsibleTime = 0;
@@ -24,7 +24,7 @@ export function getCarCorners(player, paddingX = 4, paddingY = 4) {
     const cy = player.y + player.h / 2;
 
     return [
-        { x: cx + (-w * cos - -h * sin), y: cy + (-w * sin - h * cos) },
+        { x: cx + (-w * cos - -h * sin), y: cy + (-w * sin + - h * cos) },
         { x: cx + (w * cos - -h * sin), y: cy + (w * sin + -h * cos) },
         { x: cx + (w * cos - h * sin), y: cy + (w * sin + h * cos) },
         { x: cx + (-w * cos - h * sin), y: cy + (-w * sin + h * cos) }
@@ -89,7 +89,7 @@ export function checkCollision(delta) {
     }
 
     return false;
-    
+
 };
 
 export function checkObstacleCollision() {
@@ -104,7 +104,7 @@ export function checkObstacleCollision() {
 export function checkGasStationObstacleCollision() {
     for(const obs of gasStationObstacles){
         if(obs.y === undefined || obs.y === null) continue;
-        if(isColliding){
+        if(isColliding(obs)){
             return true;
         }
     }

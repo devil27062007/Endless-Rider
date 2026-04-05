@@ -51,7 +51,7 @@ export function spawnCars(delta) {
             if(spriteNumber==="1" || spriteNumber === "3"){
                 lane += sprite.sw + 22;
             } else {
-                lane +=sprite.sw + 22;
+                lane +=sprite.sw + 28;
             }
         }else {
             y = -500;
