@@ -2,7 +2,7 @@ import { drawCars , spawnCars , updateCars } from "./car.js" ;
 import { checkCollision , currentInvinsibleTime, isInvinsible } from "./collision.js";
 import { deductHealth } from "./health.js";
 import { canvas, ctx, isDead, resetAll, resetIsDead, resetIsGameRunning, setIsDead, keys, playerSpriteSheet1 , playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4} from "./main.js" ;
-import { drawObstacles, spawnObstacles , updateObstacles , drawScene,getRoadBelowPlayer,randomSceneGeneration, posX, roads, updateRoad , updateDetails } from "./scene.js" ;
+import { drawObstacles,fuelStationMapForRefill,isPlayerOnTopOfRefillBox, spawnObstacles , updateObstacles , drawScene,getRoadBelowPlayer,randomSceneGeneration, posX, roads, updateRoad , updateDetails } from "./scene.js" ;
 import { player1Sprite, player2Sprite, player3Sprite, player4Sprite, summer } from "./spriteCoordinates.js" ;
 import { startPageLoop } from "./startPage.js";
 import { drawFullUI , drawIsDeadTitle} from "./ui.js";
@@ -207,6 +207,10 @@ export function gameLoop(currentTime) {
         console.log("collision occurs");
         deductHealth();
     }
+    if(isPlayerOnTopOfRefillBox){
+        player.fuel = 1;
+    }
+    fuelStationMapForRefill()
     
     animationId = requestAnimationFrame(gameLoop);
 };
