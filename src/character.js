@@ -1,5 +1,5 @@
 import { drawCars , spawnCars , updateCars } from "./car.js" ;
-import { checkCollision } from "./collision.js";
+import { checkCollision , currentInvinsibleTime, isInvinsible } from "./collision.js";
 import { deductHealth } from "./health.js";
 import { canvas, ctx, isDead, resetAll, resetIsDead, resetIsGameRunning, setIsDead, keys, playerSpriteSheet1 , playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4} from "./main.js" ;
 import { drawObstacles, spawnObstacles , updateObstacles , drawScene,getRoadBelowPlayer,randomSceneGeneration, posX, roads, updateRoad , updateDetails } from "./scene.js" ;
@@ -147,6 +147,11 @@ export function updatePlayer(delta) {
 };
 
 export function drawPlayer() {
+    if(isInvinsible){
+        const blinkInterval = 0.1;
+        const shouldHide = Math.floor(currentInvinsibleTime / blinkInterval) % 2 === 0;
+        if(shouldHide) return;
+    }
     ctx.imageSmoothingEnabled = false;
     const pos = playerSprite[player.currentFacing];
     ctx.drawImage(
@@ -197,7 +202,7 @@ export function gameLoop(currentTime) {
         drawPlayer();
     }
 
-    const check = checkCollision();
+    const check = checkCollision(delta);
     if(check && !isDead){
         console.log("collision occurs");
         deductHealth();
