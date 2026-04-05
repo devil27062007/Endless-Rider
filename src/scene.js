@@ -1,7 +1,7 @@
 import { player } from "./character.js";
-import { canvas, ctx, obstaclesSpriteSheet, randomInt, stationMarkingSpriteSheet, summerDetails1SpriteSheet, summerDetails2SpriteSheet, summerDetails3SpriteSheet, summerDetails4SpriteSheet, summerDetailsSpriteSheet, summerGasStationSpriteSheet, summerRoadSpriteSheet } from "./main.js";
+import { canvas, ctx,desertDetails1SpriteSheet, desertDetails2SpriteSheet, desertDetails3SpriteSheet, desertDetails4SpriteSheet, desertDetailsSpriteSheet, desertGasStationSpriteSheet,  obstaclesSpriteSheet, randomInt, stationMarkingSpriteSheet, summerDetails1SpriteSheet, summerDetails2SpriteSheet, summerDetails3SpriteSheet, summerDetails4SpriteSheet, summerDetailsSpriteSheet, summerGasStationSpriteSheet, summerRoadSpriteSheet } from "./main.js";
 import { playRefillSound } from "./sound.js";
-import { roadObstackleSprites, scale, stationMarking, summer, summerDetails } from "./spriteCoordinates.js";
+import { desertDetails, winterDetails, roadObstackleSprites, scale, stationMarking, summer, summerDetails } from "./spriteCoordinates.js";
 
 let currentScene = "summer";
 let nextSceneSpawnTime = 5;

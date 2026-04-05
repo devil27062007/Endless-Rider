@@ -189,7 +189,6 @@ export function showPlayerColorOption(x, y, w, h) {
     for (let i = 0; i < players.length; i++) {
         const sprite = players[i];
         const sheet = sheets[i];
-        console.log("currentX : ", currentX, "currentY : ", currentY);
 
         ctx.drawImage(
             sheet,

@@ -52,14 +52,41 @@ winterRoadSpriteSheet.src = "assets/Levels/Winter_road.png";
 export const winterGasStationSpriteSheet = new Image();
 winterGasStationSpriteSheet.src = "assets/Levels/Winter_gas_station.png";
 
-export const desertRoadSpriteSheet = new Image();
-desertRoadSpriteSheet.src = "assets/Levels/Desert_road.png";
+export const winterDetailsSpriteSheet = new Image();
+winterDetailsSpriteSheet.src = "assets/Levels/Winter_details.png";
+
+export const winterDetails1SpriteSheet = new Image();
+winterDetails1SpriteSheet.src = "assets/Levels/Winter_details1.png";
+
+export const winterDetails2SpriteSheet = new Image();
+winterDetails2SpriteSheet.src = "assets/Levels/Winter_details2.png";
+
+export const winterDetails3SpriteSheet = new Image();
+winterDetails3SpriteSheet.src = "assets/Levels/Winter_details3.png";
+
+export const winterDetails4SpriteSheet = new Image();
+winterDetails4SpriteSheet.src = "assets/Levels/Winter_details4.png";
 
 export const desertGasStationSpriteSheet = new Image();
 desertGasStationSpriteSheet.src = "assets/Levels/Desert_gas_station.png";
 
 export const npcSpriteSheet = new Image();
 npcSpriteSheet.src = "assets/Cars/NPC_cars.png";
+
+export const desertDetailsSpriteSheet = new Image();
+desertDetailsSpriteSheet.src = "assets/Levels/Desert_details.png";
+
+export const desertDetails1SpriteSheet = new Image();
+desertDetails1SpriteSheet.src = "assets/Levels/Desert_details1.png";
+
+export const desertDetails2SpriteSheet = new Image();
+desertDetails2SpriteSheet.src = "assets/Levels/Desert_details2.png";
+
+export const desertDetails3SpriteSheet = new Image();
+desertDetails3SpriteSheet.src = "assets/Levels/Desert_details3.png";
+
+export const desertDetails4SpriteSheet = new Image();
+desertDetails4SpriteSheet.src = "assets/Levels/Desert_details4.png";
 
 export const fullSpriteSheet = new Image();
 fullSpriteSheet.src = "assets/UI/Main_UI.png";

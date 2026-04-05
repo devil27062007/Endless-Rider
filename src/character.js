@@ -3,7 +3,7 @@ import { checkCollision, currentInvinsibleTime, isInvinsible } from "./collision
 import { deductHealth } from "./health.js";
 import { canvas, ctx, isDead, resetAll, resetIsDead, resetIsGameRunning, setIsDead, keys, playerSpriteSheet1, playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4 } from "./main.js";
 import { drawObstacles, fuelStationMapForRefill, isPlayerOnTopOfRefillBox, spawnObstacles, updateObstacles, drawScene, getRoadBelowPlayer, randomSceneGeneration, posX, roads, updateRoad, updateDetails } from "./scene.js";
-import { updateEngineSound } from "./sound.js";
+import { updateEngineSound , stopEngine } from "./sound.js";
 import { player1Sprite, player2Sprite, player3Sprite, player4Sprite, summer } from "./spriteCoordinates.js";
 import { startPageLoop } from "./startPage.js";
 import { drawFullUI, drawIsDeadTitle } from "./ui.js";
@@ -83,6 +83,7 @@ export function updatePlayer(delta) {
     let moveY = 0;
     if (player.fuel <= 0) {
         setIsDead();
+        stopEngine();
         return;
     }
 
@@ -250,7 +251,6 @@ export function gameLoop(currentTime) {
 
     const check = checkCollision(delta);
     if (check && !isDead) {
-        console.log("collision occurs");
         deductHealth();
     }
     if (isPlayerOnTopOfRefillBox()) {
