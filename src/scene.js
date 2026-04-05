@@ -102,22 +102,22 @@ export function randomSceneGeneration(delta) {
     }
 };
 
-export function addScene(key) {
+export function addScene(key){
     scene.push(key);
 };
 
-export function removeScene(key) {
+export function removeScene(key){
     const isThere = scene.indexOf(key);
     if (isThere !== -1) {
         scene.splice(isThere, 1);
     }
 }
 
-export function randomDetailsGeneration() {
+export function randomDetailsGeneration(){
     return "details" + randomInt(1, 5).toString();
 };
 
-export function updateRoad(delta) {
+export function updateRoad(delta){
     posY += delta * (player.speed + 200);
 
     const road = summer[roads[0]];
@@ -131,7 +131,7 @@ export function updateRoad(delta) {
     refillRoads();
 };
 
-export function updateDetails(delta) {
+export function updateDetails(delta){
 
     detailsPosY += delta * (player.speed + 200);
     const detailH = detailsMap[currentScene]["details1"].sh;
