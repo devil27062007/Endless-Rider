@@ -2,9 +2,9 @@
 
 import { drawCars, spawnCars, updateCars } from "./car.js";
 import { changeDefaultPlayer } from "./character.js";
-import { buttonSpriteSheet, buttonsSpriteSheet, canvas, ctx, desertRoadSpriteSheet,npcSpriteSheet, playerSpriteSheet1, playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4, summerRoadSpriteSheet,winterRoadSpriteSheet } from "./main.js";
-import { addScene, posX,posY, randomSceneGeneration, removeScene,scene, drawObstacles, drawScene, spawnObstacles, updateDetails, updateRoad } from "./scene.js";
-import { closeButtonSprite, desert, npc1Sprite,npc2Sprite, npc3Sprite, player1Sprite, player2Sprite, player2Sprite, player3Sprite, player4Sprite, scale, selectedButtonSprite, startPageUI, summer, winter} from "./spriteCoordinates.js";
+import { buttonsSpriteSheet, canvas, ctx, desertRoadSpriteSheet, npcSpriteSheet, playerSpriteSheet1, playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4, summerRoadSpriteSheet, winterRoadSpriteSheet } from "./main.js";
+import { addScene, posX, posY, randomSceneGeneration, removeScene, scene, drawObstacles, drawScene, spawnObstacles, updateDetails, updateRoad, sceneSpriteSheetMap } from "./scene.js";
+import { closeButtonSprite, desert, npc1Sprite, npc2Sprite, npc3Sprite, player1Sprite, player2Sprite, player3Sprite, player4Sprite, scale, selectedButtonSprite, startPageUI, summer, winter } from "./spriteCoordinates.js";
 
 let animationId = null;
 let lastTime = 0;
@@ -56,11 +56,11 @@ export function stopStartPageLoop() {
 
 }
 
-export function drawButtons(){
+export function drawButtons() {
     const keys = Object.keys(startPageUI);
     let currentX = posX - startPageUI["start"].sw - scale * 3;
     let currentY = canvas.height / window.devicePixelRatio / 2 - keys.length / 2 * startPageUI["start"].sh;
-    for(let i = 0; i < keys.length; i++){
+    for (let i = 0; i < keys.length; i++) {
 
         const sprite = startPageUI[keys[i]];
         ctx.drawImage(
@@ -80,79 +80,87 @@ export function drawButtons(){
     }
 };
 
-export function isClickOnStartButton(x, y){
-    return(
-        x >= pos["start"].x &&
-        x <= pos["start"].x + pos["start"].w &&
-        y >= pos["start"].y &&
-        y <= pos["start"].y + pos["start"].h
+export function isClickOnStartButton(x, y) {
+    const startPos = pos["start"];
+    if (!startPos) return false;
+    return (
+        x >= startPos.x &&
+        x <= startPos.x + startPos.w &&
+        y >= startPos.y &&
+        y <= startPos.y + startPos.h
     );
 }
 
-export function isClickOnSceneButton(x,y){
+export function isClickOnSceneButton(x, y) {
+    const sceneButtonPos = pos["scene"];
+    if (!sceneButtonPos) return false;
     return (
-        x >= pos["scene"].x &&
-        x <= pos["scene"].x + pos["scene"].w &&
-        y >= pos["scene"].y &&
-        y <= pos["scene"].y + pos["scene"].h
+        x >= sceneButtonPos.x &&
+        x <= sceneButtonPos.x + sceneButtonPos.w &&
+        y >= sceneButtonPos.y &&
+        y <= sceneButtonPos.y + sceneButtonPos.h
     )
 };
 
-export function isClickOnColorButton(x,y){
-    return(
-        x >= pos["cars"].x &&
-        x <= pos["cars"].x + pos["cars"].w &&
-        y >= pos["cars"].y &&
-        y <= pos["cars"].y + pos["cars"].h
+export function isClickOnColorButton(x, y) {
+    const carsPos = pos["cars"];
+    if (!carsPos) return false;
+    return (
+        x >= carsPos.x &&
+        x <= carsPos.x + carsPos.w &&
+        y >= carsPos.y &&
+        y <= carsPos.y + carsPos.h
     )
 };
 
-export function isClickOnShopButton(x , y){
-    return(
-        x >= pos["shop"].x &&
-        x <= pos["shop"].x + pos["shop"].w &&
-        y >= pos["shop"].y &&
-        y <= pos["shop"].y + pos["shop"].h
+export function isClickOnShopButton(x, y) {
+    const shopPos = pos["shop"];
+    if (!shopPos) return false;
+    return (
+        x >= shopPos.x &&
+        x <= shopPos.x + shopPos.w &&
+        y >= shopPos.y &&
+        y <= shopPos.y + shopPos.h
     );
 };
 
-export function clearIsActiveButton(){
+export function clearIsActiveButton() {
     isActiveButton[0] = null;
 };
 
-export function drawPageForActiveButtons(){
-    if(isActiveButton.length===0 || isActiveButton[0] === "" || isActiveButton[0] === null) return;
+export function drawPageForActiveButtons() {
+    if (isActiveButton.length === 0 || isActiveButton[0] === "" || isActiveButton[0] === null) return;
 
     let bgWidth = Math.round(scale * 130);
     let bgHeight = Math.round(scale * 130);
 
     let x = posX + summer["road"].sw + scale * 3;
-    let y = canvas.height / window.devicePixelRatio / 2 -bgHeight / 2;
+    let y = canvas.height / window.devicePixelRatio / 2 - bgHeight / 2;
 
     drawBackGround(x, y, bgWidth, bgHeight);
     drawCloseButton(x + bgWidth - scale * 2, y + scale * 2);
-    drawStationObstacles(x + bgWidth / 2, y+ scale * 2);
+    drawStationObstacles(x + bgWidth / 2, y + scale * 2);
     showPlayerColorOption(x, y, bgWidth, bgHeight);
-    drawSceneOnStartPage(x,y);
+    drawSceneOnStartPage(x, y);
 };
 
-export function drawBackGround(x,y,w=scale * 20, h = scale * 20, radius = 10){
-    if(isActiveButton[0] === "start") return;
+export function drawBackGround(x, y, w = scale * 20, h = scale * 20, radius = 10) {
+    if (isActiveButton[0] === "start") return;
     ctx.fillStyle = "#1e1e1e";
     ctx.beginPath();
     ctx.roundRect(x, y, w, h, radius);
     ctx.fill();
 };
 
-export function drawCloseButton(x , y){
+export function drawCloseButton(x, y) {
     x -= closeButtonSprite.sw;
-    if(isActiveButton[0] === "start") return;
+    if (isActiveButton[0] === "start") return;
     ctx.drawImage(
         buttonsSpriteSheet,
         closeButtonSprite.x, closeButtonSprite.y, closeButtonSprite.w, closeButtonSprite.h,
         x, y, closeButtonSprite.sw, closeButtonSprite.sh
     );
-    closePos[0]={
+    closePos[0] = {
         x: x,
         y: y,
         w: closeButtonSprite.sw,
@@ -160,19 +168,19 @@ export function drawCloseButton(x , y){
     };
 };
 
-export function drawTitle(x,y){
+export function drawTitle(x, y) {
     if (isActiveButton[0] === "start") return;
     const sprite = startPageUI[isActiveButton[0]];
     ctx.drawImage(
         buttonsSpriteSheet,
         sprite.x, sprite.y, sprite.w, sprite.h,
-        x - sprite.sw / 2 , y, sprite.sw, sprite.sh
+        x - sprite.sw / 2, y, sprite.sw, sprite.sh
     )
 };
 
-export function showPlayerColorOption(x, y, w, h){
-    if(isActiveButton[0]!= "cars") return;
-    const players = [player1Sprite, player2Sprite, player3Sprite,player4Sprite];
+export function showPlayerColorOption(x, y, w, h) {
+    if (isActiveButton[0] != "cars") return;
+    const players = [player1Sprite, player2Sprite, player3Sprite, player4Sprite];
     const sheets = [playerSpriteSheet1, playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4];
     const key = ["1", "2", "3", "4"];
 
@@ -185,21 +193,21 @@ export function showPlayerColorOption(x, y, w, h){
     let row = 0;
     let col = 0;
 
-    for(let i =0; i < players.length ; i++){
+    for (let i = 0; i < players.length; i++) {
         const sprite = players[i];
         const sheet = sheets[i];
-        console.log("currentX : ",currentX,"currentY : ", currentY);
+        console.log("currentX : ", currentX, "currentY : ", currentY);
 
         ctx.drawImage(
-            sheet ,
-            sprite.up.x , sprite.up.y, sprite.up.w, sprite.up.h,
+            sheet,
+            sprite.up.x, sprite.up.y, sprite.up.w, sprite.up.h,
             currentX, currentY, sprite.up.sw, sprite.up.sh
         );
-        if(activeCar ==="player"+key[i]+"Sprite"){
+        if (activeCar === "player" + key[i] + "Sprite") {
             ctx.drawImage(
                 buttonsSpriteSheet,
                 selectedButtonSprite.x, selectedButtonSprite.y, selectedButtonSprite.w, selectedButtonSprite.h,
-                currentX + selectedButtonSprite.sw + scale * 2, currentY,selectedButtonSprite.sw, selectedButtonSprite.sh
+                currentX + selectedButtonSprite.sw + scale * 2, currentY, selectedButtonSprite.sw, selectedButtonSprite.sh
             );
         }
         carPos[key[i]] = {
@@ -208,11 +216,11 @@ export function showPlayerColorOption(x, y, w, h){
             w: sprite.up.sw,
             h: sprite.up.sh
         }
-        if(col < maxCol ){
+        if (col < maxCol) {
             col++;
             currentX += sprite.up.sw + scale * 5;
         }
-        else{
+        else {
             row++;
             col = 0;
             currentX = x + scale * 10;
@@ -221,3 +229,94 @@ export function showPlayerColorOption(x, y, w, h){
     }
 };
 
+export function isClickOnCar(x, y) {
+    const key = Object.keys(carPos);
+    for (let i = 0; i < key.length; i++) {
+        const val = carPos[key[i]];
+        if (x >= val.x &&
+            x <= val.x + val.w &&
+            y >= val.y &&
+            y <= val.y + val.h) {
+            activeCar = "player" + key[i] + "Sprite";
+
+            changeDefaultPlayer(parseInt(key[i]));
+
+            return true;
+        }
+    }
+    return true;
+};
+
+export function isClickOncloseButton(x, y) {
+    if (!closePos[0]) return false;
+    return (
+        x >= closePos[0].x &&
+        x <= closePos[0].x + closePos[0].w &&
+        y >= closePos[0].y &&
+        y <= closePos[0].y + closePos[0].h
+    );
+}
+
+export function drawSceneOnStartPage(x, y) {
+    if (isActiveButton[0] !== "scene") return;
+
+    let currentX = x + scale * 5;
+    let currentY = y + scale * 25;
+
+    let scenePos = [summer["road"], winter["road"], desert["road"]];
+    let sheets = [summerRoadSpriteSheet, winterRoadSpriteSheet, desertRoadSpriteSheet];
+    let keys = ["summer", "winter", "desert"];
+
+    for (let i = 0; i < keys.length; i++) {
+        const sprite = scenes[i];
+        const sheet = sheets[i];
+        const key = keys[i];
+
+        ctx.drawImage(
+            sheet,
+            sprite.x, sprite.y, sprite.w, sprite.h,
+            currentX, currentY, sprite.sw * 0.4, sprite.sh * 0.4
+        );
+
+        for (let j = 0; j < activeScenes.length; j++) {
+            if (activeScenes[j] === key) {
+                ctx.drawImage(
+                    buttonsSpriteSheet,
+                    selectedButtonSprite.x, selectedButtonSprite.y, selectedButtonSprite.w, selectedButtonSprite.h,
+                    currentX + sprite.sw * 0.4 + scale * 3, currentY + sprite.sh * 0.4 / 2 - selectedButtonSprite.sh / 2, selectedButtonSprite.sw, selectedButtonSprite.sh
+                );
+            }
+        };
+
+        scenePos[key] = {
+            x: currentX,
+            y: currentY,
+            w: sprite.sw * 0.4,
+            h: sprite.sh * 0.4,
+        }
+
+        currentY += sprite.sw * 0.4 + scale * 5;
+    }
+};
+
+export function isClickOnScene(x, y) {
+    const keys = Object.keys(scenePos);
+    for (let i = 0; i < keys.length; i++) {
+        const pos = scenePos[keys[i]];
+        if (x >= pos.x &&
+            x <= pos.x + pos.w &&
+            y >= pos.y &&
+            y <= pos.y + pos.h) {
+            const isThere = activeScenes.indexOf(keys[i]);
+            if (isThere === -1) {
+                activeScenes.push(keys[i]);
+                addScene(keys[i]);
+            } else if (activeScenes.length > 1) {
+                activeScenes.splice(isThere, 1);
+                removeScene(keys[i]);
+            }
+            return true;
+        }
+    }
+    return false;
+}

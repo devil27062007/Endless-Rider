@@ -93,18 +93,21 @@ export function randomSceneGeneration(delta) {
     currentTime += delta;
     if (currentTime > nextSceneSpawnTime) {
         currentTime = 0;
-        currentScene = [randomInt(0, scene.length - 1)];
+        const nextScene = scene[randomInt(0, scene.length - 1)];
+        if (detailsMap[nextScene] && sceneSpriteSheetMap[nextScene]) {
+            currentScene = nextScene;
+        }
     }
 };
 
-export function addScene(key){
+export function addScene(key) {
     scene.push(key);
 };
 
-export function removeScene(key){
+export function removeScene(key) {
     const isThere = scene.indexOf(key);
-    if(isThere !== -1){
-        scene.splice(isThere,1);
+    if (isThere !== -1) {
+        scene.splice(isThere, 1);
     }
 }
 
@@ -169,7 +172,7 @@ export function refillRoads() {
             roadUntillNextBunk += bunkSpacingIncrease;
             bunkSpacingIncrease += 2;
             roads.push("gasStation");
-            spawnGasStationObstacles();
+            spawnGasStaionObstacles();
             totalH += summer["gasStation"].stackHeight;
             while (totalH < screenH * 3) {
                 roads.push("road");
@@ -214,6 +217,12 @@ export function drawRoad() {
     }
 };
 export function drawDetails() {
+    const currentSceneDetails = detailsMap[currentScene];
+    const currentSceneSheets = sceneSpriteSheetMap[currentScene];
+    if (!currentSceneDetails || !currentSceneSheets || detailsForLeft.length === 0 || detailsForRight.length === 0) {
+        return;
+    }
+
     const leftEdge = posX;
     const rightEdge = posX + summer["road"].sw;
     let currentH = 0;
@@ -221,9 +230,10 @@ export function drawDetails() {
     //left side
     for (let i = 0; i < detailsForLeft.length; i++) {
         let currentW = 0;
-        for (let j = 0; j < detailsForLeft[0].length; j++) {
-            const sheet = sceneSpriteSheetMap[currentScene][detailsForLeft[i][j]];
-            const detail = detailsMap[currentScene][detailsForLeft[i][j]];
+        for (let j = 0; j < detailsForLeft[i].length; j++) {
+            const sheet = currentSceneSheets[detailsForLeft[i][j]];
+            const detail = currentSceneDetails[detailsForLeft[i][j]];
+            if (!sheet || !detail) continue;
             const drawY = detailsPosY + currentH - detail.sh;
             if (currentW < leftEdge - detail.sw) {
                 ctx.drawImage(
@@ -234,7 +244,8 @@ export function drawDetails() {
                 currentW += detail.sw;
             }
             else if (currentW < leftEdge) {
-                const sprite = detailsMap[currentScene]["details2"];
+                const sprite = currentSceneDetails["details2"];
+                if (!sprite) continue;
                 ctx.drawImage(
                     sheet,
                     sprite.x, sprite.y, sprite.w, sprite.h,
@@ -242,16 +253,17 @@ export function drawDetails() {
                 );
             }
         }
-        currentH += detailsMap[currentScene]["details1"].sh - 1;
+        currentH += currentSceneDetails["details1"].sh - 1;
     }
 
     //right side
     currentH = 0;
     for (let i = 0; i < detailsForRight.length; i++) {
         let currentW = rightEdge;
-        for (let j = 0; j < detailsForRight[0].length; j++) {
-            const sheet = sceneSpriteSheetMap[currentScene][detailsForRight[i][j]];
-            const detail = detailsMap[currentScene][detailsForRight[i][j]];
+        for (let j = 0; j < detailsForRight[i].length; j++) {
+            const sheet = currentSceneSheets[detailsForRight[i][j]];
+            const detail = currentSceneDetails[detailsForRight[i][j]];
+            if (!sheet || !detail) continue;
             const drawY = detailsPosY + currentH - detail.sh;
             ctx.drawImage(
                 sheet,
@@ -260,7 +272,7 @@ export function drawDetails() {
             );
             currentW += detail.sw;
         }
-        currentH += detailsMap[currentScene]["details1"].sh - 1;
+        currentH += currentSceneDetails["details1"].sh - 1;
     };
 };
 

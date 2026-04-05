@@ -3,11 +3,11 @@ import { health } from "./health.js";
 import { canvas, carrotSpriteSheet, numberSpriteSheet, cherrySpriteSheet, ctx, fullSpriteSheet, lemonSpriteSheet, playerIndicatoreSpriteSheet, randomInt,slimeSpriteSheet, fuelBarSpriteSheet, damageSpriteSheet } from "./main.js";
 import { ui, playerIcons ,numbers, scale, damageSprite } from "./spriteCoordinates.js";
 
-export let currentPlayerIcon = "lemon";
+export let currentPlayerIcon = "lemon" ;
 
-let animationSpeed = 0.3;
-let totalFrames = 3;
-let currentFrame = 0;
+let animationSpeed = 0.3 ;
+let totalFrames = 3 ;
+let currentFrame = 0 ;
 
 let displaySpeed = 0;
 

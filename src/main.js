@@ -2,8 +2,8 @@ import { initLanes } from "./car.js";
 import { gameLoop, initPlayer, player } from "./character.js";
 import { initRoadPos, initSheet } from "./scene.js";
 import { scale } from "./spriteCoordinates.js";
-import { startPage , startPageLoop ,activeCar, activeScenes , clearIsActiveButton, isActiveButton, isClickOnCar,isClickOncloseButton,isClickOnSceneButton,isClickOnScene,isClickOnShopButton, isClickOnStartButton, pos, isClickOnColorButton} from "./startPage.js";
-import { initPlayerIconSheet,  } from "./ui.js";
+import { startPage, startPageLoop, activeCar, activeScenes, clearIsActiveButton, isActiveButton, isClickOnCar, isClickOncloseButton, isClickOnSceneButton, isClickOnScene, isClickOnShopButton, isClickOnStartButton, pos, isClickOnColorButton } from "./startPage.js";
+import { initPlayerIconSheet, } from "./ui.js";
 
 export const canvas = document.getElementById("game-canvas");
 export const ctx = canvas.getContext("2d");
@@ -133,20 +133,20 @@ function onImageLoad() {
         console.log("seccess");
         //requestAnimationFrame(gameLoop);
         //startPage()
-        
+
         requestAnimationFrame(gameLoop);
     }
 };
 
-export function getCurrentMousePos(e){
+export function getCurrentMousePos(e) {
 
     const rect = canvas.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
 
     const cssX = e.clientX - rect.left;
-    const cssY = e.clientY - rect.top; 
+    const cssY = e.clientY - rect.top;
 
-    const scaleX =canvas.width / dpr / rect.width ;
+    const scaleX = canvas.width / dpr / rect.width;
     const scaleY = canvas.height / dpr / rect.height;
 
     return {
@@ -186,32 +186,31 @@ document.addEventListener("keyup", (e) => {
     }
 });
 
-document.addEventListener("click",(e) => {
+document.addEventListener("click", (e) => {
     const mousePos = getCurrentMousePos(e);
 
-    if(isClickOnStartButton(mousePos.x, mousePos.y) && !isGameRunning && !isDead){
-
-        isActiveButton[0] = "start";
-    }
-    if(isClickOnSceneButton(mousePos.x,mousePos.y) && !isGameRunning && !isDead){
-
-        isActiveButton[0] = "scene";
-    }
-    if(isClickOnColorButton(mousePos.x, mousePos.y) && !isGameRunning && !isDead){
-
-        isActiveButton[0] = "cars";
-    }
-    if(isClickOnShopButton(mousePos.x , mousePos.y) && !isGameRunning && !isDead){
-        isActiveButton["shop"];
-    }
-    if(isClickOnCar(mousePos.x, mousePos.y) && !isGameRunning && !isDead){
-        console.log(activeCar);
-    }
-    if(isClickOnScene(mousePos.x, mousePos.y) && !isGameRunning && !isDead){
-        console.log(activeScenes);
-    }
-    if(isClickOncloseButton(mousePos.x, mousePos.y) && !isGameRunning && !isDead){
-        clearIsActiveButton();
+    if (!isGameRunning && !isDead) {
+        if (isClickOnStartButton(mousePos.x, mousePos.y)) {
+            isActiveButton[0] = "start";
+        }
+        if (isClickOnSceneButton(mousePos.x, mousePos.y)) {
+            isActiveButton[0] = "scene";
+        }
+        if (isClickOnColorButton(mousePos.x, mousePos.y)) {
+            isActiveButton[0] = "cars";
+        }
+        if (isClickOnShopButton(mousePos.x, mousePos.y)) {
+            isActiveButton["shop"];
+        }
+        if (isClickOnCar(mousePos.x, mousePos.y)) {
+            console.log(activeCar);
+        }
+        if (isClickOnScene(mousePos.x, mousePos.y)) {
+            console.log(activeScenes);
+        }
+        if (isClickOncloseButton(mousePos.x, mousePos.y)) {
+            clearIsActiveButton();
+        }
     }
 });
 
@@ -240,7 +239,7 @@ desertRoadSpriteSheet.onload = onImageLoad;
 desertGasStationSpriteSheet.onload = onImageLoad;
 npcSpriteSheet.onload = onImageLoad;
 damageSpriteSheet.onload = onImageLoad;
-fuelBarSpriteSheet.onload = onImageLoad ;
+fuelBarSpriteSheet.onload = onImageLoad;
 playerIndicatoreSpriteSheet.onload = onImageLoad;
 fullSpriteSheet.onload = onImageLoad;
 numberSpriteSheet.onload = onImageLoad;
