@@ -67,6 +67,9 @@ winterDetails3SpriteSheet.src = "assets/Levels/Winter_details3.png";
 export const winterDetails4SpriteSheet = new Image();
 winterDetails4SpriteSheet.src = "assets/Levels/Winter_details4.png";
 
+export const desertRoadSpriteSheet = new Image();
+desertRoadSpriteSheet.src = "assets/Levels/Desert_road.png"
+
 export const desertGasStationSpriteSheet = new Image();
 desertGasStationSpriteSheet.src = "assets/Levels/Desert_gas_station.png";
 
@@ -145,6 +148,7 @@ function resizeCanvas() {
     canvas.height = window.innerHeight * dpr;
 
     ctx.scale(dpr, dpr);
+
     ctx.imageSmoothingEnabled = false;
 };
 
@@ -157,15 +161,11 @@ window.addEventListener("resize", () => {
 });
 
 let loadedCount = 0;
-const imageCount = 29;
+const imageCount = 39;
 
 function onImageLoad() {
     loadedCount++;
     if (imageCount === loadedCount) {
-        console.log("seccess");
-        //requestAnimationFrame(gameLoop);
-        //startPage()
-
         requestAnimationFrame(startPageLoop);
     }
 };
@@ -256,23 +256,26 @@ document.addEventListener("click", (e) => {
             requestAnimationFrame(gameLoop);
         }
         if (isClickOnSceneButton(mousePos.x, mousePos.y)) {
-
             isActiveButton[0] = "scene";
+            return;
         }
         if (isClickOnColorButton(mousePos.x, mousePos.y)) {
             isActiveButton[0] = "cars";
+            return;
         }
         if (isClickOnGuideButton(mousePos.x, mousePos.y)) {
             isActiveButton[0] = "guide";
+            return;
         }
         if (isClickOnCar(mousePos.x, mousePos.y)) {
-            console.log(activeCar);
+            return;
         }
         if (isClickOnScene(mousePos.x, mousePos.y)) {
-            console.log(activeScenes);
+            return;
         }
         if (isClickOnCloseButton(mousePos.x, mousePos.y)) {
             clearIsActiveButton();
+            return;
         }
     }
     startBgMusic();
@@ -298,8 +301,18 @@ summerDetails4SpriteSheet.onload = onImageLoad;
 summerRoadSpriteSheet.onload = onImageLoad;
 summerGasStationSpriteSheet.onload = onImageLoad;
 winterRoadSpriteSheet.onload = onImageLoad;
+winterDetails1SpriteSheet.onload = onImageLoad;
+winterDetails2SpriteSheet.onload = onImageLoad;
+winterDetails3SpriteSheet.onload = onImageLoad;
+winterDetails4SpriteSheet.onload = onImageLoad;
+winterDetailsSpriteSheet.onload = onImageLoad;
 winterGasStationSpriteSheet.onload = onImageLoad;
 desertRoadSpriteSheet.onload = onImageLoad;
+desertDetailsSpriteSheet.onload = onImageLoad;
+desertDetails1SpriteSheet.onload = onImageLoad;
+desertDetails2SpriteSheet.onload = onImageLoad;
+desertDetails3SpriteSheet.onload = onImageLoad;
+desertDetails4SpriteSheet.onload = onImageLoad;
 desertGasStationSpriteSheet.onload = onImageLoad;
 npcSpriteSheet.onload = onImageLoad;
 damageSpriteSheet.onload = onImageLoad;

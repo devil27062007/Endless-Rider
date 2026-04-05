@@ -231,7 +231,7 @@ export function isClickOnCar(x, y) {
             y <= val.y + val.h) {
             activeCar = "player" + key[i] + "Sprite";
 
-            changeDefaultPlayer(parseInt(key[i]));
+            changeDefaultPlayer(parseInt(key[i] - 1));
 
             return true;
         }
