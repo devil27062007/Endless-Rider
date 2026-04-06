@@ -14,10 +14,12 @@ Survive as Long as Possible there is no fixed objectective ride untill you feel 
 
 ## About Game
 - The game features a procedural road and scene generation so there is no end to the game.
-- The NP traffic and Obstacles are spawned dynamically so it dosent't fell static.
+- The NPC traffic and Obstacles are spawned dynamically so it dosent't fell static.
 - The Game offers collision detecting using SAT algorithm.
 - Gasstation to refill your gas tank to ride more long.
 - Health system with Invinsibility.
+- Having three types map (summer, winter, Desert).
+- When multiple maps are selected,the game automatically switches between them during gameplay.
 
 ## Tech Stack
 - JavaScript(Vannila)
