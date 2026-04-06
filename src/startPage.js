@@ -231,7 +231,7 @@ export function isClickOnCar(x, y) {
             y <= val.y + val.h) {
             activeCar = "player" + key[i] + "Sprite";
 
-            changeDefaultPlayer(parseInt(key[i] - 1));
+            changeDefaultPlayer(parseInt(key[i]) - 1);
 
             return true;
         }
@@ -266,7 +266,7 @@ export function drawSceneOnStartPage(x, y, w) {
     ctx.fillStyle = "#ffffff";
     ctx.font = ` ${scale * 4}px Pixelify Sans`;
     ctx.fillText(" Selecting 2+ scenes ",currentX + w / 2 - scale * 22, currentY + scale * 16);
-    ctx.fillText(" Randomly spawns thwm across", currentX + w / 2 - scale * 22, currentY + scale * 30);
+    ctx.fillText(" Randomly spawns them across", currentX + w / 2 - scale * 22, currentY + scale * 30);
     ctx.fillText(" the Start Page and in game", currentX + w / 2 - scale * 22, currentY + scale * 44);
 
     for (let i = 0; i < keys.length; i++) {

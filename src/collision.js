@@ -25,7 +25,7 @@ export function getCarCorners(entity , paddingX = 4, paddingY = 4){
     const cy = entity.y + entity.h / 2;
 
     return [
-        { x: cx + (-w * cos - -h * sin), y: cy + (-w * sin + - h * cos)},
+        { x: cx + (-w * cos - -h * sin), y: cy + (-w * sin + -h * cos)},
         { x: cx + (w * cos - -h * sin), y: cy + (w * sin + -h * cos)},
         { x: cx + (w * cos - h * sin), y: cy + (w * sin + h * cos)},
         { x: cx + (-w * cos - h * sin), y: cy + (-w * sin + h * cos)}

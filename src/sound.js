@@ -23,8 +23,8 @@ async function loadEngineSound(){
 
 //need to add retro sound effects that gives retro vibe
 const collisionSounds = [
-    new Audio("assets/Sounds/MISCCAR_00.WAV"),
-    new Audio("assets/Sounds/MISCCAR_0E.WAV"),
+    new Audio("assets/Sounds/MISCCAR_00.wav"),
+    new Audio("assets/Sounds/MISCCAR_0E.wav"),
     new Audio("assets/Sounds/MISCCAR_02.wav"),
     new Audio("assets/Sounds/CAR2CAR_00.wav"),
     new Audio("assets/Sounds/CAR2CAR_01.wav"),

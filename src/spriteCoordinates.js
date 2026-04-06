@@ -95,7 +95,7 @@ export const ui = {
     damageYes: { x: 0, y: 0, w: 8, h: 8, sw: 8 * scale, sh: 8 * scale },
     damageNo: { x: 8, y: 0, w: 8, h: 8, sw: 8 * scale, sh: 8 * scale },
     fuelBar: { x: 6, y: 4, w: 4, h: 48, sw: 4 * scale, sh: 48 * scale },
-    playerIndicator: { x: 0, y: -1, w: 8, h: 8, sw: 8 * scale, sh: 9 * scale },
+    playerIndicator: { x: 0, y: -1, w: 8, h: 9, sw: 8 * scale, sh: 9 * scale },
     numbers: { x: 0, y: 0, w: 80, h: 8, sw: 80 * scale, sh: 8 * scale },
 }
 
@@ -123,16 +123,16 @@ export const playerIcons = {
 }
 
 export const numbers = {
-    "0": { x: 0, y: 0, w: 8, h: 8, sw: 8 * (scale + 1), sh: 8 * (scale + 2) },
-    "1": { x: 9, y: 0, w: 5, h: 8, sw: 5 * (scale + 1), sh: 8 * (scale + 1) },
-    "2": { x: 17, y: 0, w: 7, h: 8, sw: 7 * (scale + 1), sh: 8 * (scale + 1) },
-    "3": { x: 25, y: 0, w: 7, h: 8, sw: 7 * (scale + 1), sh: 8 * (scale + 1) },
-    "4": { x: 33, y: 0, w: 7, h: 8, sw: 7 * (scale + 1), sh: 8 * (scale + 1) },
-    "5": { x: 41, y: 0, w: 7, h: 8, sw: 7 * (scale + 1), sh: 8 * (scale + 1) },
-    "6": { x: 49, y: 0, w: 7, h: 8, sw: 7 * (scale + 1), sh: 8 * (scale + 1) },
-    "7": { x: 57, y: 0, w: 7, h: 8, sw: 7 * (scale + 1), sh: 8 * (scale + 1) },
-    "8": { x: 65, y: 0, w: 7, h: 8, sw: 7 * (scale + 1), sh: 8 * (scale + 1) },
-    "9": { x: 73, y: 0, w: 7, h: 8, sw: 7 * (scale + 1), sh: 8 * (scale + 1) },
+    "0": { x: 0, y: 0, w: 8, h: 8, sw: 8 * (scale + 2), sh: 8 * (scale + 2) },
+    "1": { x: 9, y: 0, w: 5, h: 8, sw: 5 * (scale + 2), sh: 8 * (scale + 2) },
+    "2": { x: 17, y: 0, w: 7, h: 8, sw: 7 * (scale + 2), sh: 8 * (scale + 2) },
+    "3": { x: 25, y: 0, w: 7, h: 8, sw: 7 * (scale + 2), sh: 8 * (scale + 2) },
+    "4": { x: 33, y: 0, w: 7, h: 8, sw: 7 * (scale + 2), sh: 8 * (scale + 2) },
+    "5": { x: 41, y: 0, w: 7, h: 8, sw: 7 * (scale + 2), sh: 8 * (scale + 2) },
+    "6": { x: 49, y: 0, w: 7, h: 8, sw: 7 * (scale + 2), sh: 8 * (scale + 2) },
+    "7": { x: 57, y: 0, w: 7, h: 8, sw: 7 * (scale + 2), sh: 8 * (scale + 2) },
+    "8": { x: 65, y: 0, w: 7, h: 8, sw: 7 * (scale + 2), sh: 8 * (scale + 2) },
+    "9": { x: 73, y: 0, w: 7, h: 8, sw: 7 * (scale + 2), sh: 8 * (scale + 2) },
 }
 
 export const damageSprite = {
