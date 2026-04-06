@@ -8,27 +8,27 @@ import { player1Sprite, player2Sprite, player3Sprite, player4Sprite, summer } fr
 import { startPageLoop } from "./startPage.js";
 import { drawFullUI, drawIsDeadTitle } from "./ui.js";
 
-export let defaultPlayerSheet;
-export let playerSprite;
-export let fuelDropTime = 1;
-export let fuelCurrentTime = 0;
+export let defaultPlayerSheet ;
+export let playerSprite ;
+export let fuelDropTime = 1 ;
+export let fuelCurrentTime = 0 ;
 
-export let maxOffRoadTime = 3;
-export let currentOffRoadTime = 0;
+export let maxOffRoadTime = 3 ;
+export let currentOffRoadTime = 0 ;
 
-export const isDeadTimer = 5;
-export let currentIsDeadTimer = 0;
+export const isDeadTimer = 5 ;
+export let currentIsDeadTimer = 0 ;
 
-export let steeringAngle = 0;
-let lateralVelocity = 0;
+export let steeringAngle = 0 ;
+let lateralVelocity = 0 ;
 
-const maxSteer = 0.7;
-const steerSpeed = 8;
-const steerReturn = 10;
+const maxSteer = 0.7 ;
+const steerSpeed = 8 ;
+const steerReturn = 10 ;
 
-const lateralMaxSpeed = 320;
-const lateralFriction = 900;
-const lateralAccel = 1400;
+const lateralMaxSpeed = 320 ;
+const lateralFriction = 900 ;
+const lateralAccel = 1400 ;
 
 export const player = {
     x: 0,
@@ -145,17 +145,14 @@ export function updatePlayer(delta) {
     const speedFactor = 0.5 + (player.speed / player.maxSpeed) * 0.5;
 
     if (moveX > 0) {
-        //player.currentFacing ="upRight";
         steeringAngle = Math.min(steeringAngle + steerSpeed * delta, maxSteer);
         lateralVelocity += lateralAccel * speedFactor * delta;
     }
     else if (moveX < 0) {
-        //player.currentFacing = "upLeft";
         steeringAngle = Math.max(steeringAngle - steerSpeed * delta, -maxSteer);
         lateralVelocity -= lateralAccel * speedFactor * delta;
     }
     else {
-        //player.currentFacing = "up";
         if (steeringAngle > 0) steeringAngle = Math.max(steeringAngle - steerReturn * delta, 0);
         if (steeringAngle < 0) steeringAngle = Math.min(steeringAngle + steerReturn * delta, 0);
     }

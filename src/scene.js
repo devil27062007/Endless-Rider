@@ -2,7 +2,6 @@ import { player } from "./character.js";
 import { canvas, ctx, desertDetails1SpriteSheet, desertDetails2SpriteSheet, desertDetails3SpriteSheet, desertDetails4SpriteSheet, desertDetailsSpriteSheet, desertGasStationSpriteSheet, desertRoadSpriteSheet, winterDetails1SpriteSheet, winterDetails2SpriteSheet, winterDetails3SpriteSheet, winterDetails4SpriteSheet, winterDetailsSpriteSheet, winterGasStationSpriteSheet, winterRoadSpriteSheet, obstaclesSpriteSheet, randomInt, stationMarkingSpriteSheet, summerDetails1SpriteSheet, summerDetails2SpriteSheet, summerDetails3SpriteSheet, summerDetails4SpriteSheet, summerDetailsSpriteSheet, summerGasStationSpriteSheet, summerRoadSpriteSheet } from "./main.js";
 import { playRefillSound } from "./sound.js";
 import { desertDetails, winterDetails, roadObstackleSprites, scale, stationMarking, summer, summerDetails } from "./spriteCoordinates.js";
-import { activeScenes } from "./startPage.js"
 
 let currentScene = "summer";
 let nextSceneSpawnTime = 5;
@@ -23,31 +22,31 @@ export const sceneMap = {
 
 export const detailsMap = {
     "summer": {
-        "details1": summerDetails["details1"],
-        "details2": summerDetails["details2"],
-        "details3": summerDetails["details3"],
-        "details4": summerDetails["details4"],
-        "details5": summerDetails["details5"],
+        "details1": summerDetails["details1"] ,
+        "details2": summerDetails["details2"] ,
+        "details3": summerDetails["details3"] ,
+        "details4": summerDetails["details4"] ,
+        "details5": summerDetails["details5"] 
     },
     "winter": {
-        "details1": winterDetails["details1"],
-        "details2": winterDetails["details2"],
-        "details3": winterDetails["details3"],
-        "details4": winterDetails["details4"],
+        "details1": winterDetails["details1"] ,
+        "details2": winterDetails["details2"] ,
+        "details3": winterDetails["details3"] ,
+        "details4": winterDetails["details4"] ,
         "details5": winterDetails["details5"]
     },
     "desert": {
-        "details1": desertDetails["details1"],
-        "details2": desertDetails["details2"],
-        "details3": desertDetails["details3"],
-        "details4": desertDetails["details4"],
+        "details1": desertDetails["details1"] ,
+        "details2": desertDetails["details2"] ,
+        "details3": desertDetails["details3"] ,
+        "details4": desertDetails["details4"] ,
         "details5": desertDetails["details5"]
     }
 };
 
-export let sceneSpriteSheetMap;
-export let posX, posY, detailsPosY = 0;
-export let sceneNeedY, sceneNeedX;
+export let sceneSpriteSheetMap ;
+export let posX, posY, detailsPosY = 0 ;
+export let sceneNeedY, sceneNeedX ;
 
 export function initSheet() {
     sceneSpriteSheetMap = {
@@ -59,7 +58,7 @@ export function initSheet() {
             "details3": summerDetails2SpriteSheet,
             "details4": summerDetails3SpriteSheet,
             "details5": summerDetails4SpriteSheet,
-        },
+        } ,
         "winter": {
             "road": winterRoadSpriteSheet,
             "gasStation": winterGasStationSpriteSheet,
@@ -68,7 +67,7 @@ export function initSheet() {
             "details3": winterDetails2SpriteSheet,
             "details4": winterDetails3SpriteSheet,
             "details5": winterDetails4SpriteSheet
-        },
+        } ,
         "desert": {
             "road": desertRoadSpriteSheet,
             "gasStation": desertGasStationSpriteSheet,

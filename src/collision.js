@@ -1,20 +1,19 @@
 import { cars } from "./car.js";
-import { player, playerSprite, steeringAngle } from "./character.js";
-import { ctx } from "./main.js";
+import { player, steeringAngle } from "./character.js";
 import { gasStationObstacles, obstacles } from "./scene.js";
 import { playCollisionSound } from "./sound.js";
 
 const directionalAngles = {
-    up: -Math.PI / 2,
-    upRight: -Math.PI / 4,
+    up: -Math.PI / 2 ,
+    upRight: -Math.PI / 4 ,
     upLeft: -3 * Math.PI / 4
 };
 
-export const invinsibleTime = 3;
-export let currentInvinsibleTime = 0;
-export let isInvinsible = false;
+export const invinsibleTime = 3 ;
+export let currentInvinsibleTime = 0 ;
+export let isInvinsible = false ;
 
-export function getCarCorners(entity , paddingX = 4, paddingY = 4){
+export function getCarCorners(entity , paddingX = 4, paddingY = 4) {
     const angle = entity === player ? steeringAngle : directionalAngles[player.currentFacing] ?? 0;
     const cos = Math.cos(angle);
     const sin = Math.sin(angle);
@@ -32,19 +31,19 @@ export function getCarCorners(entity , paddingX = 4, paddingY = 4){
     ]
 };
 
-export function project(corners, axis){
+export function project(corners, axis) {
     const dots = corners.map(c => c.x * axis.x + c.y * axis.y);
     return { min: Math.min(...dots), max: Math.max(...dots) };
 };
 
-export function getAxes(angle){
+export function getAxes(angle) {
     return [
         { x: Math.cos(angle), y: Math.sin(angle)},
         { x: -Math.sin(angle), y: Math.cos(angle)}
     ]
 };
 
-export function isColliding(car){
+export function isColliding(car) {
     const cornerA = getCarCorners(player);
     const cornerB = getCarCorners(car);
 
@@ -63,11 +62,10 @@ export function isColliding(car){
 }
 
 
-//collision for obstacles and npc
-export function checkCollision(delta){
-    if(isInvinsible){
+export function checkCollision(delta) {
+    if(isInvinsible) {
         currentInvinsibleTime += delta;
-        if(currentInvinsibleTime > invinsibleTime){
+        if(currentInvinsibleTime > invinsibleTime) {
             currentInvinsibleTime = 0;
             isInvinsible = false;
         }
@@ -96,16 +94,16 @@ export function checkCollision(delta){
 
 };
 
-export function checkObstacleCollision(){
+export function checkObstacleCollision() {
     for (const obs of obstacles) {
-        if(isColliding(obs) && obs.isDeadly){
+        if(isColliding(obs) && obs.isDeadly) {
             return true;
         }
     };
     return false;
 };
 
-export function checkGasStationObstacleCollision(){
+export function checkGasStationObstacleCollision() {
     for(const obs of gasStationObstacles){
         if(obs.y === undefined || obs.y === null) continue;
         if(isColliding(obs)){
@@ -115,7 +113,7 @@ export function checkGasStationObstacleCollision(){
     return false;
 };
 
-export function checkNPCCarCollision(){
+export function checkNPCCarCollision() {
     for(const car of cars){
         if(isColliding(car)){
             return true;

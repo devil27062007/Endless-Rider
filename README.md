@@ -1,5 +1,5 @@
 # Endless Rider
-A top down riding / driving game where you dodge traffic , avoid obstacles and keey your fuel topped up as long as you can.
+A top down driving game where you dodge traffic , avoid obstacles and keey your fuel topped up as long as you can.
 
 ## Controls
 | Key | Action |

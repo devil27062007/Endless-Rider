@@ -4,7 +4,7 @@ import { resetHealth } from "./health.js";
 import { initRoadPos, initSheet , resetScene } from "./scene.js";
 import { startBgMusic, startEngine } from "./sound.js";
 import { scale } from "./spriteCoordinates.js";
-import { startPage, startPageLoop, activeCar, isClickOnGuideButton ,activeScenes, clearIsActiveButton, isActiveButton, isClickOnCar, isClickOnCloseButton, isClickOnSceneButton, isClickOnScene, stopStartPageLoop, isClickOnStartButton, pos, isClickOnColorButton } from "./startPage.js";
+import { startPageLoop, isClickOnGuideButton, clearIsActiveButton, isActiveButton, isClickOnCar, isClickOnCloseButton, isClickOnSceneButton, isClickOnScene, stopStartPageLoop, isClickOnStartButton, pos, isClickOnColorButton } from "./startPage.js";
 import { initPlayerIconSheet } from "./ui.js";
 
 export const canvas = document.getElementById("game-canvas");
