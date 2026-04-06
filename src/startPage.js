@@ -1,5 +1,3 @@
-
-
 import { drawCars, spawnCars, updateCars } from "./car.js";
 import { changeDefaultPlayer } from "./character.js";
 import { buttonsSpriteSheet, canvas, ctx, desertRoadSpriteSheet, npcSpriteSheet, playerSpriteSheet1, playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4, summerRoadSpriteSheet, winterRoadSpriteSheet } from "./main.js";
@@ -340,6 +338,11 @@ export function showHowToPlay(x, y) {
     ctx.font = `bold ${scale * 4}px Pixelify Sans`;
     ctx.fillText(" ↑/W , ↓/S/SpaceBar, ←/A and →/D to Move Your Car", left, currentY);
     currentY += lineH;
+
+    // ctx.fillStyle = "#fffff";
+    // ctx.font = `bold ${scale * 4}px Pixelify Sans`;
+    // ctx.fillText("↓/S and Spacebar will slow your speed",left,currentY);
+    // currentY += lineH;
 
     ctx.fillStyle = "#FFD700";
     ctx.font = `bold ${scale * 5}px Pixelify Sans`;

@@ -3,17 +3,17 @@ import { health } from "./health.js";
 import { canvas, gameOverSpriteSheet, isDead, carrotSpriteSheet, numbersSpriteSheet, cherrySpriteSheet, ctx, fullSpriteSheet, lemonSpriteSheet, playerIndicatorSpriteSheet, randomInt,slimeSpriteSheet, fuelBarSpriteSheet, damageSpriteSheet } from "./main.js";
 import { ui,gameOverSprite, playerIcons ,numbers, scale, damageSprite } from "./spriteCoordinates.js";
 
-export let currentPlayerIcon = "lemon" ;
+export let currentPlayerIcon = "lemon";
 
-let animationSpeed = 0.3 ;
-let totalFrames = 3 ;
-let currentFrame = 0 ;
+let animationSpeed = 0.3;
+let totalFrames = 3;
+let currentFrame = 0;
 
 let displaySpeed = 0;
 
 const playerIconArray = ["lemon", "cherry", "slime", "carrot"];
 
-export let playerIconSheetMap ;
+export let playerIconSheetMap;
 
 export function initPlayerIconSheet(){
     playerIconSheetMap = {
