@@ -15,7 +15,7 @@ const spriteMap = {
     "4": npc4Sprite,
 }
 
-export function initLanes() {
+export function initLanes(){
     const lane1 = canvas.width / window.devicePixelRatio / 2 - (summer["road"].sw / 2);
     const lane2 = lane1 + (summer["road"].sw / 2);
 
@@ -23,11 +23,11 @@ export function initLanes() {
     lanes[1] = lane2;
 }
 
-export function resetCars() {
+export function resetCars(){
     cars = [];
 }
 
-export function spawnCars(delta) {
+export function spawnCars(delta){
     currentSpawn += delta;
     if(currentSpawn > spawnDelay) {
         currentSpawn = 0;

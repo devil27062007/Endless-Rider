@@ -3,7 +3,7 @@
 import { drawCars, spawnCars, updateCars } from "./car.js";
 import { changeDefaultPlayer } from "./character.js";
 import { buttonsSpriteSheet, canvas, ctx, desertRoadSpriteSheet, npcSpriteSheet, playerSpriteSheet1, playerSpriteSheet2, playerSpriteSheet3, playerSpriteSheet4, summerRoadSpriteSheet, winterRoadSpriteSheet } from "./main.js";
-import { addScene, posX, posY, randomSceneGeneration, removeScene, scene, drawObstacles, drawScene, spawnObstacles, updateDetails, updateRoad,updateObstacles} from "./scene.js";
+import { addScene, posX, posY, randomSceneGeneration, removeScene, scene, drawObstacles, drawScene, spawnObstacles, updateDetails, updateRoad, updateObstacles } from "./scene.js";
 import { closeButtonSprite, desert, npc1Sprite, npc2Sprite, npc3Sprite, player1Sprite, player2Sprite, player3Sprite, player4Sprite, scale, selectedButtonSprite, startPageUI, summer, winter } from "./spriteCoordinates.js";
 
 let animationId = null;
@@ -133,7 +133,7 @@ export function drawPageForActiveButton() {
     drawCloseButton(x + bgWidth - scale * 2, y + scale * 2);
     drawTitle(x + bgWidth / 2, y + scale * 2);
     showPlayerColorOption(x, y, bgWidth, bgHeight);
-    drawSceneOnStartPage(x, y);
+    drawSceneOnStartPage(x, y, bgWidth);
     showHowToPlay(x, y);
 };
 
@@ -249,7 +249,7 @@ export function isClickOnCloseButton(x, y) {
     );
 }
 
-export function drawSceneOnStartPage(x, y) {
+export function drawSceneOnStartPage(x, y, w) {
     if (isActiveButton[0] !== "scene") return;
 
     let currentX = x + scale * 5;
@@ -258,6 +258,16 @@ export function drawSceneOnStartPage(x, y) {
     let scenes = [summer["road"], winter["road"], desert["road"]];
     let sheets = [summerRoadSpriteSheet, winterRoadSpriteSheet, desertRoadSpriteSheet];
     let keys = ["summer", "winter", "desert"];
+
+    ctx.fillStyle = "#FFD700";
+    ctx.font = `bold ${scale * 5}px Pixelify Sans`
+    ctx.fillText("NOTE:", currentX + w / 2 - scale * 22, currentY + scale * 3);
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = ` ${scale * 4}px Pixelify Sans`;
+    ctx.fillText(" Selecting 2+ scenes ",currentX + w / 2 - scale * 22, currentY + scale * 16);
+    ctx.fillText(" Randomly spawns thwm across", currentX + w / 2 - scale * 22, currentY + scale * 30);
+    ctx.fillText(" the Start Page and in game", currentX + w / 2 - scale * 22, currentY + scale * 44);
 
     for (let i = 0; i < keys.length; i++) {
         const sprite = scenes[i];
@@ -313,8 +323,8 @@ export function isClickOnScene(x, y) {
     return false;
 }
 
-export function showHowToPlay(x, y){
-    if(isActiveButton[0] !== "guide") return;
+export function showHowToPlay(x, y) {
+    if (isActiveButton[0] !== "guide") return;
 
     const left = x + scale * 5;
     let currentY = y + scale * 25;
@@ -323,17 +333,17 @@ export function showHowToPlay(x, y){
     ctx.fillStyle = "#FFD700";
     ctx.font = `bold ${scale * 5}px Pixelify Sans`;
     ctx.textAlign = "left";
-    ctx.fillText("CONTROLS",left,currentY);
+    ctx.fillText("CONTROLS", left, currentY);
     currentY += lineH;
 
     ctx.fillStyle = "#ffffff";
     ctx.font = `bold ${scale * 4}px Pixelify Sans`;
-    ctx.fillText(" ↑/W , ↓/S/SpaceBar, ←/A and →/D to Move Your Car",left,currentY);
+    ctx.fillText(" ↑/W , ↓/S/SpaceBar, ←/A and →/D to Move Your Car", left, currentY);
     currentY += lineH;
 
     ctx.fillStyle = "#FFD700";
     ctx.font = `bold ${scale * 5}px Pixelify Sans`;
-    ctx.fillText("OBSTACLES",left,currentY);
+    ctx.fillText("OBSTACLES", left, currentY);
     currentY += lineH;
 
     ctx.fillStyle = "#ffffff";
@@ -343,27 +353,27 @@ export function showHowToPlay(x, y){
 
     ctx.fillStyle = "#FFD700";
     ctx.font = `bold ${scale * 5}px Pixelify Sans`;
-    ctx.fillText("Fuel", left,currentY);
+    ctx.fillText("Fuel", left, currentY);
     currentY += lineH;
 
     ctx.fillStyle = "#ffffff";
     ctx.font = `bold ${scale * 4}px Pixelify Sans`;
-    ctx.fillText(" Pull into Gas Stations to top up your fuel",left,currentY);
+    ctx.fillText(" Pull into Gas Stations to top up your fuel", left, currentY);
     currentY += lineH;
 
     ctx.fillStyle = "#ffffff";
     ctx.font = `bold ${scale * 4}px Pixelify Sans`;
-    ctx.fillText(" Don't stay offRoad too Long else you loose a heart and",left,currentY);
+    ctx.fillText(" Don't stay offRoad too Long else you loose a heart and", left, currentY);
     currentY += lineH;
 
     ctx.fillStyle = "#ffffff";
     ctx.font = `bold ${scale * 4}px Pixelify Sans`;
-    ctx.fillText(" fuel will be consumed more",left,currentY);
+    ctx.fillText(" fuel will be consumed more", left, currentY);
     currentY += lineH;
 
     ctx.fillStyle = "#FFD700";
     ctx.font = `bold ${5 * scale}px Pixelify Sans`
-    ctx.fillText("HEALTH", left,currentY);
+    ctx.fillText("HEALTH", left, currentY);
     currentY += lineH;
 
     ctx.fillStyle = "#ffffff";

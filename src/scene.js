@@ -11,6 +11,11 @@ let currentTime = 0;
 let roadsSinceLastBunk = 2;
 let roadsUntilNextBunk = 6;
 let bunkSpacingIncrease = 2;
+let totalRoadH = 0;
+let screenH = 0;
+let screenW = 0;
+
+const obstacleKeys = Object.keys(roadObstackleSprites);
 
 export const sceneMap = {
     "summer": summer,
@@ -78,16 +83,19 @@ export function initSheet() {
 
 export function initRoadPos() {
     const road = summer["road"];
-    posX = (canvas.width / window.devicePixelRatio / 2) - (road.sw / 2);
-    posY = canvas.height / window.devicePixelRatio;
+    screenW = canvas.width / window.devicePixelRatio;
+    screenH = canvas.height / window.devicePixelRatio;
+    posX= screenW / 2 - road.sw;
+    posY = screenH;
 
-    const screenH = posY;
     const roadsNeeded = Math.ceil((screenH * 3) / road.stackHeight) + 2;
     for (let i = 0; i < roadsNeeded; i++) {
         roads.push("road");
+        totalRoadH += road.stackHeight;
     }
+
     sceneNeedY = Math.ceil((screenH * 3) / detailsMap[currentScene]["details1"].sh) + 2;
-    sceneNeedX = Math.ceil(((canvas.width / window.devicePixelRatio / 2 - road.sw / 2) * 3) / detailsMap[currentScene]["details1"].sw) + 2;
+    sceneNeedX = Math.ceil(((screenW / 2 - road.sw / 2) * 3) / detailsMap[currentScene]["details1"].sw) + 2;
 
     for (let i = 0; i < sceneNeedY; i++) {
         detailsForLeft[i] = [];
@@ -107,34 +115,14 @@ export function initRoadPos() {
     const arrow = stationMarking["arrowRight"];
     const pump = stationMarking["pump"];
     const gap = scale * 5;
-    
     const totalW = pump.sw + gap + arrow.sw;
     const startX = rightLaneCenter - totalW / 2;
 
-    gasStationMarking[0] = {
-        x: startX,
-        y: null,
-        sprite: pump,
-        key: "pump"
-    };
-    gasStationMarking[1]= {
-        x: startX + pump.sw + gap,
-        y: null,
-        sprite: arrow,
-        key: "arroRight"
-    };
-    gasStationMarking[2] = {
-        x: rightLaneCenter - stationMarking["60"].sw / 2,
-        y: null,
-        sprite: stationMarking["60"],
-        key: "60"
-    };
-    gasStationMarking[3] = {
-        x: rightLaneCenter - stationMarking["30"].sw / 2,
-        y: null,
-        sprite: stationMarking["30"],
-        key: "30"
-    };
+    gasStationMarking[0] = { x: startX, y: null, sprite: pump, key: "pump" };
+    gasStationMarking[1] = { x: startX + pump.sw + gap, y: null, sprite: arrow, key: "arroRight" };
+    gasStationMarking[2] = { x: rightLaneCenter - stationMarking["60"].sw / 2, y: null, sprite: stationMarking["60"], key: "60" };
+    gasStationMarking[3] = { x: rightLaneCenter - stationMarking["30"].sw / 2, y: null, sprite: stationMarking["30"], key: "30" };
+
     spawnGasStationObstacles();
 };
 
@@ -150,7 +138,10 @@ export function resetScene() {
     bunkSpacingIncrease = 2;
     refillZones = [];
     gasStationMarking = [];
-}
+    totalRoadH = 0;
+    screenH = canvas.height / window.devicePixelRatio;
+    screenW = canvas.width / window.devicePixelRatio;
+};
 
 export const scene = ["summer"];
 export let roads = [];
@@ -165,7 +156,7 @@ export let refillZones = [];
 export let gasStationMarking = [];
 
 export function randomSceneGeneration(delta) {
-    currentTime += delta
+    currentTime += delta ;
     if (currentTime > nextSceneSpawnTime) {
         currentTime = 0;
         currentScene = scene[randomInt(0, scene.length - 1)];
@@ -181,7 +172,7 @@ export function removeScene(key){
     if (isThere !== -1) {
         scene.splice(isThere, 1);
     }
-}
+};
 
 export function randomDetailsGeneration(){
     return "details" + randomInt(1, 5).toString();
@@ -189,55 +180,42 @@ export function randomDetailsGeneration(){
 
 export function updateRoad(delta){
     posY += delta * (player.speed + 200);
-
     const road = summer[roads[0]];
-
     if (posY >= canvas.height / window.devicePixelRatio + road.sh) {
         roads.shift();
+        totalRoadH -= road.stackHeight;
         posY -= road.stackHeight;
-
     }
-
     refillRoads();
 };
 
 export function updateDetails(delta){
-
     detailsPosY += delta * (player.speed + 200);
     const detailH = detailsMap[currentScene]["details1"].sh;
     if (detailsPosY >= detailH) {
         detailsPosY -= detailH;
-
         detailsForLeft.pop();
         detailsForRight.pop();
-
         const newRowLeft = [];
         const newRowRight = [];
-
         for (let i = 0; i < sceneNeedX; i++) {
             newRowLeft.push(randomDetailsGeneration());
             newRowRight.push(randomDetailsGeneration());
         };
-
         detailsForLeft.unshift(newRowLeft);
         detailsForRight.unshift(newRowRight);
     }
 };
 
 export function updateObstacles(delta) {
-    for (let i = 0; i < obstacles.length; i++) {
+    for (let i = obstacles.length - 1; i >= 0; i--) {
         obstacles[i].y += delta * (player.speed + 200);
+        if(obstacles[i].y >= 3000) obstacles.splice(i,1);
     }
-    obstacles = obstacles.filter(obs => obs.y < 3000);
 };
 
 export function refillRoads() {
-    const screenH = canvas.height / window.devicePixelRatio;
-    let totalH = 0;
-    for (let i = 0; i < roads.length; i++) {
-        totalH += summer[roads[i]].stackHeight;
-    }
-    while (totalH < screenH * 3) {
+    while (totalRoadH < screenH * 3) {
         roadsSinceLastBunk++;
         if (roadsSinceLastBunk > roadsUntilNextBunk) {
             roadsSinceLastBunk = 0;
@@ -248,27 +226,26 @@ export function refillRoads() {
                 bunkSpacingIncrease += 2;
             }
             roads.push("gasStation");
-            //spawnGasStationObstacles();
-            totalH += summer["gasStation"].stackHeight;
-            while (totalH < screenH * 3) {
+            totalRoadH += summer["gasStation"].stackHeight;
+            while (totalRoadH < screenH * 3) {
                 roads.push("road");
-                totalH += summer["road"].stackHeight;
+                totalRoadH += summer["road"].stackHeight;
             }
         } else {
             roads.push("road");
-            totalH += summer["road"].stackHeight;
+            totalRoadH += summer["road"].stackHeight;
         }
     }
-}
+};
 
 export function drawScene() {
-
     drawDetails();
     drawRoad();
     drawObstacles();
 };
 
 export function drawRoad() {
+    const sceneSheet = sceneSpriteSheetMap[currentScene];
     const positions = [];
     let currentY = posY;
     for (let i = 0; i < roads.length; i++) {
@@ -276,29 +253,19 @@ export function drawRoad() {
         currentY -= summer[roads[i]].stackHeight;
     }
     for (let i = roads.length - 1; i >= 0; i--) {
-
         const road = summer[roads[i]];
-        const sheet = sceneSpriteSheetMap[currentScene][roads[i]];
+        const sheet = sceneSheet[roads[i]];
         const drawY = positions[i] - (road.sh - road.stackHeight);
-
-        ctx.drawImage(
-            sheet,
-            road.x, road.y, road.w, road.h,
-            posX, drawY, road.sw, road.sh
-        );
-
+        ctx.drawImage( sheet, road.x, road.y, road.w, road.h, posX, drawY, road.sw, road.sh );
         if (roads[i + 1] === "gasStation") {
             drawArrowToStation(drawY);
             drawStationObstacles(drawY);
         }
-        if(roads[i + 3] === "gasStation"){
-            drawPetrolPumpMarking("30", drawY);
-        }
-        if(roads[i + 6] === "gasStation"){
-            drawPetrolPumpMarking("60", drawY);
-        }
+        if(roads[i + 3] === "gasStation") drawPetrolPumpMarking("30", drawY); 
+        if(roads[i + 6] === "gasStation") drawPetrolPumpMarking("60", drawY);
     }
 };
+
 export function drawDetails() {
     const leftEdge = posX;
     const rightEdge = posX + summer["road"].sw;
